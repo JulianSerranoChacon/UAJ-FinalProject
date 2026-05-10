@@ -8,7 +8,7 @@ public class LocalCore
     //Cada key alberga un array de tamano languages. 
     //En cada posicion del array se encuentra el string en un idioma concreto.
     private int languages;
-    private Dictionary<int, string> stringTable;
+    private Dictionary<int, string[]> stringTable;
 
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
@@ -32,36 +32,52 @@ public class LocalCore
 #endregion
 
 #region Metodos
-    public string getLine(int ID)
+    //Inicia los atributos de la clase
+    //Establece el maximo de idiomas a langAm
+    public void Initiate(int langAm)
+    {
+        if(langAm <= 0)
+            throw new ArgumentException("Ammount of languages cannot be negative or 0.");
+
+        languages = langAm;
+        stringTable = new Dictionary<int, string[]>();
+        currentLang = 0;
+    }
+
+    //Devuelve el string de la ID correspondiente del idioma que esta activo.
+    public string GetLine(int ID)
     {
         string[] box;
 
         if(stringTable.TryGetValue(ID, out box))
             return box[currentLang];
-
-        return null;
+        else
+            throw new ArgumentException("No value assigned to corresponding key.");
     }
 
-    public void setLine(int ID, string value)
+    //Escribe la linea de la ID correspondiente al idioma que esta activo. 
+    //Si la ID es nueva, crea un array
+    public void SetLine(int ID, string value)
     {
         string[] box;
 
         if(stringTable.TryGetValue(ID, out box))
-        {
             box[currentLang] = value;
-        }
         else
         {
             box = new string[languages]
+            box[currentLang] = value;
         }
     }
 
     //Cambia el idioma que esta usando la clase
-    //Falla si es un idioma fuera del alcance especificado
-    public void changeLang(int newLang)
+    //Falla si es un idioma fuera del alcance especificado.
+    public void ChangeLang(int newLang)
     {
-        if(newLang < languages)
-            currentLang = newLang; 
+        if(newLang >= languages)
+            throw new ArgumentException("New language value exceeding range of languages.");
+
+        currentLang = newLang; 
     }
 
 #endregion
