@@ -104,17 +104,14 @@ Métodos:
 
 #### [ExtractClass]
 
-Atributos:
-```
-- List<TMP_Text> texts
-```
+
 Métodos:
 ```
 - ExtractStrings()
 ```
-`ExtractClass` será una clase que extraiga todas las cadenas de texto del juego guardándo los textos en una List de tipo `TMP_Text`.
+`ExtractClass` será una clase que extraiga todas las cadenas de texto del juego guardándo los textos en una List temporal de tipo `TMP_Text` que luego lo pasa al `LocalCore`.
 
-`ExtractStrings` lo que va a hacer es usando el el `EditorSceneManager`, abre todas las escenas que están en la build con un for, en el modo `Additive` para evitar cerrar la escena activa en la que estamos, y recorre los objetos de la escena para obtener todos los componentes `TMP_Text` y añadirlos a la `List texts`. Antes de seguir con la siguiente escena, esta cierra la escena que abrió a menos de que sea la escena activa.
+`ExtractStrings` lo que va a hacer es usando el el `EditorSceneManager`, abre todas las escenas que están en la build con un for, en el modo `Additive` para evitar cerrar la escena activa en la que estamos, y recorre los objetos de la escena para obtener todos los componentes `TMP_Text` y añadirlos a la `List texts` y luego pasar los textos al `LocalCore`. Antes de seguir con la siguiente escena, esta cierra la escena que abrió a menos de que sea la escena activa.
 
 
 #### [Translateclass]

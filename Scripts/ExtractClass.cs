@@ -10,12 +10,12 @@ using UnityEngine.UI;
 
 public class ExtractClass 
 {
-    List<TMP_Text> tmp; 
     // Start is called before the first frame update
     public void ExtractStrings()
     {
+        List<TMP_Text> tmp = new List<TMP_Text>();
         //Se crea una nueva lista al principio para evitar que se llene con infomacion repetida
-        tmp = new List<TMP_Text>();
+        uint ID = 0;
         //cogemos primero la direccion de las escena en la que estamos
         string activeScenePath = SceneManager.GetActiveScene().path;
         for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
@@ -30,6 +30,12 @@ public class ExtractClass
             foreach (var root in SceneManager.GetSceneByBuildIndex(i).GetRootGameObjects())
             {
                 tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
+                foreach (TMP_Text text in tmp)
+                {
+                    LocalCore.GetInstance().SetLine(ID, text.text);
+                    ID++;
+                }
+                tmp.Clear();
             }
             //cerramos la escena antes de irnos a la siguiente escena
             if (scenePath != activeScenePath)
@@ -37,7 +43,7 @@ public class ExtractClass
                 EditorSceneManager.CloseScene(SceneManager.GetSceneByBuildIndex(i), true);
             }
         }
-        Debug.Log(tmp.Count);
+
     }
 
 }

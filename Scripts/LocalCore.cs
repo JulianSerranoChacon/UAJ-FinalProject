@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 public class LocalCore
 {
@@ -8,7 +9,7 @@ public class LocalCore
     //Cada key alberga un array de tamano languages. 
     //En cada posicion del array se encuentra el string en un idioma concreto.
     private int languages;
-    private Dictionary<int, string[]> stringTable;
+    private Dictionary<uint, string[]> stringTable;
 
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
@@ -21,7 +22,7 @@ public class LocalCore
 
     private static LocalCore _instance;
 
-    public static Singleton GetInstance()
+    public static LocalCore GetInstance()
     {
         if (_instance == null)
         {
@@ -40,12 +41,12 @@ public class LocalCore
             throw new ArgumentException("Ammount of languages cannot be negative or 0.");
 
         languages = langAm;
-        stringTable = new Dictionary<int, string[]>();
+        stringTable = new Dictionary<uint, string[]>();
         currentLang = 0;
     }
 
     //Devuelve el string de la ID correspondiente del idioma que esta activo.
-    public string GetLine(int ID)
+    public string GetLine(uint ID)
     {
         string[] box;
 
@@ -57,7 +58,7 @@ public class LocalCore
 
     //Escribe la linea de la ID correspondiente al idioma que esta activo. 
     //Si la ID es nueva, crea un array
-    public void SetLine(int ID, string value)
+    public void SetLine(uint ID, string value)
     {
         string[] box;
 
@@ -65,7 +66,7 @@ public class LocalCore
             box[currentLang] = value;
         else
         {
-            box = new string[languages]
+            box = new string[languages];
             box[currentLang] = value;
         }
     }
