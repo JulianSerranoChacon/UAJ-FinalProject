@@ -67,6 +67,7 @@ La comunicación del usuario con el módulo en ejecución y el parseo de strings
 
 El usuario será el encargado de llevar la cuenta del idioma en el que está y de actualizar a la clase LocalCore cuando cambie. Además, el usuario deberá llevar la cuenta de que int corresponde a cada idioma cuando extraiga los strings o guarde los cambios en el CSV
 Asumiremos que solo leeremos y guardaremos los strings que solo están dentro de la escena y no en los assets (salvo por los scriptable objects, eso lo leemos), para evitar repeticiones y problemas de solapamientos al guardar los datos
+Los strings que leeremos serán strings de escenas que están incluidas en la build del juego.
 
 ### 3.2 Clases de Unity
 
