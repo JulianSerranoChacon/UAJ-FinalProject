@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using System.ComponentModel;
 
 public class LocalCore
 {
@@ -24,7 +25,12 @@ public class LocalCore
 
     public static LocalCore GetInstance()
     {
-        if (_instance == null)
+       return  Instance();
+    }
+
+    private static Instance()
+    {
+         if (_instance == null)
         {
             _instance = new LocalCore();
         }
@@ -79,6 +85,11 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
+    }
+
+    public void Awake()
+    {
+        Instance();
     }
 
 #endregion
