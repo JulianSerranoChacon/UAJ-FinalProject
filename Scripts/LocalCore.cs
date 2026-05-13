@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System;
 using System.ComponentModel;
-using UnityEngine;
 using System.Xml.Serialization;
 
 public class LocalCore
@@ -19,9 +18,9 @@ public class LocalCore
     private int currentLang;
 
     public IReadOnlyDictionary<uint, string[]> GetLines => stringTable;
-    #endregion
+#endregion
 
-    #region Singleton
+#region Singleton
     //La clase necesitara ser un singleton ya que solo queremos que exista una
     public LocalCore() {}
 
@@ -83,11 +82,6 @@ public class LocalCore
         }
 
         //Debug.Log(currentLang);
-    }
-
-    public void Flush()
-    {
-
     }
 
     //Cambia el idioma que esta usando la clase

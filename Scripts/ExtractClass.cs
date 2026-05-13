@@ -11,6 +11,8 @@ using UnityEngine.UI;
 
 public class ExtractClass 
 {
+    public ExtractClass() {}
+
     // Start is called before the first frame update
     public void FindAssetsByType<T>() where T : UnityEngine.Object
     {
@@ -61,7 +63,6 @@ public class ExtractClass
                 
             }
         }
-        LocalCore.GetInstance().Flush();
     }
 
 }

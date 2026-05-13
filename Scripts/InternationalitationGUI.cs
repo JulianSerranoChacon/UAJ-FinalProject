@@ -8,6 +8,7 @@ public class InternationalitationGUI : EditorWindow
 {
     ExtractClass extract = new ExtractClass();
     FileClass file = new FileClass();
+    private string langNum;
 
     // Incluye una entrada en el menu superior de Unity
     [MenuItem("Custom Plugins/Internationalitaion Plugin")]
