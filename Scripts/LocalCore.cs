@@ -23,10 +23,7 @@ public class LocalCore
 
     #region Singleton
     //La clase necesitara ser un singleton ya que solo queremos que exista una
-    public LocalCore() {
-        //TODO: Definir los idiomas que vamos a a�adir
-        Initiate(2);
-    }
+    public LocalCore() {}
 
     private static LocalCore _instance;
 
@@ -101,23 +98,6 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
-    }
-
-    //Metodo auxiliar para escribir el unordered map por el editor de unity (se quita luego)
-    public void print()
-    {
-
-        foreach (KeyValuePair<uint, string[]> pair in stringTable)
-        {
-            Debug.Log("ID: " + pair.Key);
-
-            string[] texts = pair.Value;
-
-            for (int i = 0; i < texts.Length; i++)
-            {
-                Debug.Log("  [" + i + "] " + texts[i]);
-            }
-        }
     }
 
 #endregion

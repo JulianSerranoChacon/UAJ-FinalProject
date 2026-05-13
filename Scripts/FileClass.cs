@@ -8,6 +8,8 @@ using TMPro;
 public class FileClass
 {
 
+    public FileClass() {}
+
     //Enumerado que indica el nombre con el que se escriben los nodos hijos 
     public enum Language
     {
@@ -71,7 +73,7 @@ public class FileClass
         //Recorremos la lista de textos del XML
         for (int i = 0; i < texts.Count; i++) 
         {
-            //Id del texto (será la clave del Diccionario de LocalCore)
+            //Id del texto (sera la clave del Diccionario de LocalCore)
             uint id = uint.Parse(texts[i].Attributes["id"].Value);
             //Numero de lenguajes que tiene el texto
             int numLang = texts[i].ChildNodes.Count;
@@ -87,7 +89,7 @@ public class FileClass
 
                 //Debug.Log(lang.InnerText);
 
-                //Cambiamos el idioma del localCore y añadimos traduccion añ Diccionario
+                //Cambiamos el idioma del localCore y anadimos traduccion al Diccionario
                 LocalCore.GetInstance().ChangeLang(j);
                 LocalCore.GetInstance().SetLine(id, lang.InnerText);
             }
