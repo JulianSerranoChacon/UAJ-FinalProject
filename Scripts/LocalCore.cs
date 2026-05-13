@@ -17,12 +17,14 @@ public class LocalCore
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
     private int currentLang;
-#endregion
 
-#region Singleton
+    public IReadOnlyDictionary<uint, string[]> GetLines => stringTable;
+    #endregion
+
+    #region Singleton
     //La clase necesitara ser un singleton ya que solo queremos que exista una
     public LocalCore() {
-        //TODO: Definir los idiomas que vamos a añadir
+        //TODO: Definir los idiomas que vamos a aï¿½adir
         Initiate(2);
     }
 
@@ -69,7 +71,7 @@ public class LocalCore
     }
 
     //Escribe la linea de la ID correspondiente al idioma que esta activo. 
-    //Si la ID es nueva, crea un array
+    //Si la ID es nueva, crea un array y lo almacena
     public void SetLine(uint ID, string value)
     {
         string[] box;
@@ -80,7 +82,10 @@ public class LocalCore
         {
             box = new string[languages];
             box[currentLang] = value;
+            stringTable[ID] = box;
         }
+
+        //Debug.Log(currentLang);
     }
 
     public void Flush()
@@ -96,6 +101,23 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
+    }
+
+    //Metodo auxiliar para escribir el unordered map por el editor de unity (se quita luego)
+    public void print()
+    {
+
+        foreach (KeyValuePair<uint, string[]> pair in stringTable)
+        {
+            Debug.Log("ID: " + pair.Key);
+
+            string[] texts = pair.Value;
+
+            for (int i = 0; i < texts.Length; i++)
+            {
+                Debug.Log("  [" + i + "] " + texts[i]);
+            }
+        }
     }
 
 #endregion

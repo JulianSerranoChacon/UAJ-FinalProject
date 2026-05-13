@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 public class InternationalitationGUI : EditorWindow
 {
     ExtractClass extract = new ExtractClass();
+    FileClass file = new FileClass();
+
     // Incluye una entrada en el menu superior de Unity
     [MenuItem("Custom Plugins/Internationalitaion Plugin")]
     
@@ -32,6 +35,18 @@ public class InternationalitationGUI : EditorWindow
         {
             ExtractStrings();
         }
+
+        //Boton que ejecuta la escritura las cadenas de strings a un CSV
+        if(GUILayout.Button("Write To XML"))
+        {
+            WriteToXML();
+        }
+
+        //Boton que ejecuta la lectura de las cadenas de strings de un CSV concreto
+        if (GUILayout.Button("Read from XML"))
+        {
+            ReadFromXML();
+        }
     }
 
     void ModifyStrings()
@@ -42,5 +57,17 @@ public class InternationalitationGUI : EditorWindow
     void ExtractStrings()
     {
         extract.ExtractStrings();
+    }
+
+    void WriteToXML()
+    {
+        string path = Application.streamingAssetsPath + "/xml/ejemplo.xml";
+        file.WriteXML(path);
+    }
+
+    void ReadFromXML()
+    {
+        string path = Application.streamingAssetsPath + "/xml/ejemplo_Idiomas.xml";
+        file.ReadXML(path);
     }
 }
