@@ -62,6 +62,20 @@ La extracción de strings, la lectura y la escritura serán a cargo de [clase]
 
 La comunicación del usuario con el módulo en ejecución y el parseo de strings estará a cargo de [clase]
 
+#### **Implementacion del CLAMP en los textos de la UI en la ESCENA**
+
+A veces un texto puede salirse fuera de los límites porque en un lenguaje es más largo que en otro, pero hay una serie de cosas a tener en cuenta para que esto no pase.
+
+Configuración manual a realizar:
+
+Cuando añadimos un botón o un cuadro de texto por ejemplo, este tiene un objeto HIJO que es el texto. En el objeto PADRE, que es donde esta el cuadro de texto, debemos tener asignados los siguientes componentes: "Content Size Filter" (con "Horizontal Fit" y "Vertical Fit" en valor "Preferred Size"), y "Vertical Layout Group" (donde marcamos ambos valores de "Control Child Size" a TRUE y el resto a FALSE, ponemos el "Child Alingment" en "Middle Center", y asignamos a los valores de "Padding" un valor superior a 0 para que el cuadro no este tan pegado al texto).
+
+En el objeto PADRE debemos de cambiar una cosa del componente "Image", concretamente la variable "Image Type" le cambiamos a "Sliced" para que el cuadro de texto se redimensione mejor y no parezca que se estire como un chicle (la Imagen debe de estar configurada de antes en el Sprite Editor para que se sepan los bordes del cuadro de texto de forma clara).
+
+También debemos de añadir al PADRE otro componente que está incluido en el plugin que estamos haciendo, el "UIClamper", que se encarga de mantener el cuadro de texto dentro de la pantalla y procura que el texto se escriba sin desbordarse del cuadro de texto (el cual puede modificarse en plena escritura de manera dinámica o fija de pendiendo de la variable "Mode"), tiene dos parametros "Max X" y "Max Y" que son el ancho y alto maximo de resolución que puede tener el cuadro de texto EN RELACIÓN con la RESOLUCION DEL CANVAS (recomendado que el Canvas Scaler tenga resolucion 1920x1080, y que el "UI Scale Mode" esté puesto en "Scale With Screen Size", además de que a lo mejor es necesario cambiar el "Reference Pixels Per Unit" para ver el tamaño de los elementos de la UI más grandes o más pequeños, pero también habría que cambiar el "Padding" del "Vertical Layout Group" en según qué cuadros de texto, esto último ya es cuestión de probar).
+
+En el objeto HIJO, que es el propio texto, vamos al componente de "TextMeshPro - Text (UI)" y activamos "Auto Size" (cambiamos las opciones de "Min" y "Max" y demás a gusto del desarrollador). También es necesario añadir el componente de "Layout Element" al HIJO, o sino el texto se sale de la pantalla y el "UIClamper" no funciona.
+
 
 #### **SIMPLIFICACIONES:**
 
