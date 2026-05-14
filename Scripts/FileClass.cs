@@ -115,12 +115,12 @@ public class FileClass
         ret = new string[texts.Count];
 
         //Recorremos la lista de textos del XML
-        for (int i = 0; i < texts.Count; i++)
+        /*for (int i = 0; i < texts.Count; i++)
         {
             //Id del texto (sera la clave del Diccionario de LocalCore)
             uint id = uint.Parse(texts[i].Attributes["id"].Value);
 
-            ret[i] = texts[i].Attributes["Nombre"].InnerText]; 
+            ret[i] = texts[i].Attributes["Nombre"].InnerText; 
 
 
             //Numero de paramtros que tiene el lenguaje

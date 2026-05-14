@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class paco : MonoBehaviour
 {
+    float time;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,9 +18,10 @@ public class paco : MonoBehaviour
     {
         
     }
+    
     delegate string Convert(string f);
     private static string devuelve(string f)
     {
-        return f + "salchichon";
+        return Time.deltaTime.ToString() ;
     }
 }
