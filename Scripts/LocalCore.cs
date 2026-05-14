@@ -12,6 +12,7 @@ public class LocalCore
     //En cada posicion del array se encuentra el string en un idioma concreto.
     private int languages;
     private Dictionary<uint, string[]> stringTable;
+    private Dictionary<uint, TMP_Text> refTable;
 
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
@@ -47,6 +48,7 @@ public class LocalCore
 
         languages = langAm;
         stringTable = new Dictionary<uint, string[]>();
+        refTable = new Dictionary<uint, TMP_Text>();
         currentLang = 0;
     }
 
@@ -87,7 +89,27 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
+        SetAllStrings();
     }
+
+    #region Reference gaming
+    public void SetTMPReference(int ID, TMP_Text reff)
+    {
+        refTable[ID] = reff;
+    }
+
+    //Se cambia el idioma y todas las respectivas referencias
+    private void SetAllStrings()
+    {
+        foreach(TMP_Text reff in refTable.Values)
+        {
+            string[] box;
+
+            if(stringTable.TryGetValue(ID, out box))
+                reff.text = box[currentLang];
+        }
+    }
+    #endregion
 
 #endregion
 }

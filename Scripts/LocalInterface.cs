@@ -65,4 +65,10 @@ public class LocalInterface
         _files.WriteXML(path);
         _extract.ReplaceStrings();  
     }
+
+    public void StartInExecution()
+    {
+        _extract.GatherTMPReferences();
+        _core.ChangeLang(0);
+    }
 }

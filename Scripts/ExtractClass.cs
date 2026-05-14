@@ -88,6 +88,7 @@ public class ExtractClass
                 {
                     LocalCore.Instance().SetLine(ID, text.text);
                     objRef[ID] = text;
+                    LocalCore.Instance().SetTMPReference(ID, text);
                     ID++;
                 }
                 tmp.Clear();
@@ -106,19 +107,11 @@ public class ExtractClass
         }
     }
 
-    delegate string Convert(uint ID);
-    private static string GetLine(uint ID)
-    {
-        return LocalCore.Instance().GetLine(ID);
-    }
-
     public void ReplaceStrings()
     {
-        Convert func = GetLine;
-
         foreach(var item in objRef)
         {
-            item.Value.text = func(item.Key);
+            item.Value.text = item.Key.ToString();
         }
 
         foreach(var item in scriptObjRef)
@@ -126,4 +119,38 @@ public class ExtractClass
             item.Value.Item2.SetValue(item.Value.Item1, func(item.Key));
         }
     }
+    
+    //CUIDADO: NO LLAMAR FUERA DE LUGAR
+    //Recoge las referencias de todos los TMP_Text
+    //Solo llamar cuando iniciamos juego Y hemos extraido strings
+    public void GatherTMPReferences()
+    {
+        for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+        {
+            string scenePath = EditorBuildSettings.scenes[i].path;
+            //En caso de que ya estemos en la escena, no la cargamos
+            if (scenePath != activeScenePath)
+            {
+                EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+            }
+
+            foreach (var root in SceneManager.GetSceneByBuildIndex(i).GetRootGameObjects())
+            {
+                tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
+                foreach (TMP_Text text in tmp)
+                {
+                    LocalCore.Instance().SetTMPReference(Uint.Parse(text.text), text);
+                }
+                tmp.Clear();
+            }
+
+            //cerramos la escena antes de irnos a la siguiente escena
+            if (scenePath != activeScenePath)
+            {
+                EditorSceneManager.CloseScene(SceneManager.GetSceneByBuildIndex(i), true);
+                
+            }
+        }
+    }
+
 }
