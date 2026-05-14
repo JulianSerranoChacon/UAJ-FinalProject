@@ -49,7 +49,7 @@ public class InternationalitationGUI : EditorWindow
             }
         }
 
-        if (setup)
+        /*if (setup)
         {
             // Boton que ejecuta el script de modificacion de los strings
             if (GUILayout.Button("Modify All Strings"))
@@ -76,7 +76,7 @@ public class InternationalitationGUI : EditorWindow
             {
                 ReadFromXML();
             }
-        }
+        }*/
        
 
 
@@ -127,10 +127,21 @@ public class InternationalitationGUI : EditorWindow
         }
     }
 
-    void InitializeAll(int langinit, bool scan, string path)
+    void InitializeAll(int langinit, bool scan, string scrpath)
     {
-        inter = LocalInterface.Instance();
-        inter.Initiate(langinit,scan,path);
+        string selectedPath = EditorUtility.SaveFilePanel(
+            "Select directory to save XML",
+            Application.dataPath, 
+            "example.xml", //Nombre por defecto
+            "xml");
+
+
+        if (!string.IsNullOrEmpty(selectedPath))
+        {
+            inter = LocalInterface.Instance();
+            inter.Initiate(langinit, scan, scrpath);
+            inter.FullExtract(selectedPath);    
+        }
     }
 
 }
