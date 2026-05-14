@@ -95,12 +95,19 @@ public class ExtractClass
         }
     }
 
+    delegate string Convert(int ID);
+    private static string GetLine(int ID)
+    {
+        return LocalCore.Instance().GetLine(ID);
+    }
 
     public void ReplaceStrings()
     {
+        Convert func = GetLine;
+
         foreach(var item in objRef)
         {
-            item.Value.text = item.Key.ToString();
+            item.Value.text = func(item.Key);
         }
     }
 }
