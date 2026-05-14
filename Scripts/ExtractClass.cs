@@ -43,17 +43,14 @@ public class ExtractClass
     public void ExtractValues<T>(T obj)
     {
         Type objectType = obj.GetType();
-        foreach (MemberInfo m in objectType.GetMembers())
+        foreach (FieldInfo m in objectType.GetFields())
         {
-            if(m.MemberType == MemberTypes.Field)
-            { 
-                object val = ((FieldInfo)m).GetValue((obj));
+                object val = m.GetValue((obj));
                 if(val is string)
                 {
                     LocalCore.Instance().SetLine(ID, (string)val);
                     ID++;
-                }
-            }
+                }      
         }    
    }
 
