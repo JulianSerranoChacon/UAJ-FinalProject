@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEditor.VersionControl;
+using UnityEngine;
+
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -95,8 +103,8 @@ public class ExtractClass
         }
     }
 
-    delegate string Convert(int ID);
-    private static string GetLine(int ID)
+    delegate string Convert(uint ID);
+    private static string GetLine(uint ID)
     {
         return LocalCore.Instance().GetLine(ID);
     }
