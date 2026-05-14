@@ -100,37 +100,35 @@ public class FileClass
     }
 
 
-    public string[] ReadXMLIdioms(string filename)
+    public Dictionary<string, XmlNodeList> ReadXMLIdioms(string filename, List<string> lagNames)
     {
-        List<string> ret = new List<string>();
-        Debug.Log("A");
+        Dictionary<string, XmlNodeList> ret = new Dictionary<string, XmlNodeList>();
+        List<string> langNames = new List<string>();
         //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
-        Debug.Log("b");
 
         xmlDoc.Load(filename);
-        Debug.Log("c");
 
 
         //Cogemos todos los textos etiquetados con text  
         XmlNodeList texts = xmlDoc.GetElementsByTagName("Lenguaje");
-        Debug.Log("d");
 
 
         Debug.Log(texts.Count);
-        Debug.Log("e");
 
 
         //ret = new string[texts.Count];
 
         foreach (XmlNode node in texts)
         {
+            
             //Id del texto (sera la clave del Diccionario de LocalCore)
             uint id = uint.Parse(node.Attributes["id"].Value);
-            Debug.Log("f");
 
-            ret.Add(node.ChildNodes.Item(0).InnerText);
-            Debug.Log("g");
+            string langName = node.ChildNodes.Item(0).InnerText;
+            langNames.Add(langName);
+
+            ret[langName] = node;
 
 
             //ret = node.Attributes["Nombre"].InnerText;
@@ -141,7 +139,7 @@ public class FileClass
         }
 
 
-        return ret.ToArray();
+        return langNames.ToArray();
 
     }
 }
