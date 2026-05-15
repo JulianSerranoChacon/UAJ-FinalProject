@@ -65,6 +65,10 @@ public class FileClass
     {
         // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
         Dictionary<string, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
+
+        if(langNames == null)
+            List<string> langNames = new List<string>();
+
         //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(filename);
@@ -95,8 +99,12 @@ public class FileClass
                 //Cambiamos el idioma del localCore y anadimos traduccion al Diccionarioç
 
                 //Si el idoma no existe en la configuracion lo creo en el mapa sin configuracion (default)
-                if(!ret.ContainsKey(lang.Name))  
+                if (!ret.ContainsKey(lang.Name))
+                {
+                    langNames.Add(langNames);
                     ret.Add(lang.Name,new Dictionary<uint, string>());
+                }
+                    
 
                 //introduzco el texto en el idioma correspondiente con su id
                 ret[lang.Name].Add(id,lang.InnerText);
