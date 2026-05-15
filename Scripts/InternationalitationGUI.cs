@@ -130,7 +130,10 @@ public class InternationalitationGUI : EditorWindow
         if (!string.IsNullOrEmpty(selectedPath))
         {
             //file.ReadXML(selectedPath);
-            inter.ReadFromXML(selectedPath);
+            List<string> langNames;
+            langNames.Add("Español");
+            langNames.Add("English");
+            inter.ReadFromXML(selectedPath,langNames);
             Debug.Log("File load from: " + selectedPath);
         }
     }

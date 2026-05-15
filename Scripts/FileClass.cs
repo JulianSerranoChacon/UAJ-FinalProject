@@ -4,6 +4,8 @@ using System.Xml;
 using UnityEngine;
 using UnityEditor;
 using TMPro;
+using System.Data;
+using System.Diagnostics;
 
 public class FileClass
 {
@@ -60,14 +62,20 @@ public class FileClass
         xmlDoc.Save(path);
     }
 
-    public void ReadXML(string filename) 
+    public Dictionary<string, Dictionary<uint, string>> ReadXML(string filename, List<string> langNames) 
     {
+        // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
+        Dictionary<string, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
         //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(filename);
 
         //Cogemos todos los textos etiquetados con text  
         XmlNodeList texts = xmlDoc.GetElementsByTagName("text");
+
+        //creo los idiomas con sus tablas dentro del diccionario
+        for(int i = 0; i < langNames.Count ; i++)
+            ret.Add(langNames[i],new Dictionary<uint, string>());
 
         //Recorremos la lista de textos del XML
 
@@ -85,14 +93,25 @@ public class FileClass
             {
                 //Nodo hijo
                 XmlNode lang = texts[i].ChildNodes[j];
-                //Cambiamos el idioma del localCore y anadimos traduccion al Diccionario
-                LocalCore.Instance().ChangeLang(j);
-                LocalCore.Instance().SetLine(id, lang.InnerText);
+                //Cambiamos el idioma del localCore y anadimos traduccion al Diccionarioç
+
+                //introduzco el texto en el idioma correspondiente con su id
+                ret[lang.Name].Add(id,lang.InnerText);
+                //LocalCore.Instance().ChangeLang(j);
+                //LocalCore.Instance().SetLine(id, lang.InnerText);
             }
 
-            //Reseteamos el lenguaje del LocalCore (incio de los array de las claves del Diccionario)
-            LocalCore.Instance().ChangeLang(0);
+            //Reseteamos el lenguaje del LocalCore (incio de los array de las claves del Diccionario) ¿Por qué?
+            //LocalCore.Instance().ChangeLang(0);
         }
+
+        Debug.log(ret.ToString());
+        foreach(Dictionary<uint, string>i in ret)
+        {
+            Debug.log(i.ToString());
+        }
+
+        return ret;
     }
 
 

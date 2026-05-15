@@ -53,9 +53,9 @@ public class LocalInterface
         _files.WriteXML(path);
     }
 
-    public void ReadFromXML(string path)
+    public void ReadFromXML(string path,List<string> langNames)
     {
-        _files.ReadXML(path);
+        _files.ReadXML(path,langNames);
     }
     public Dictionary<string, XmlNode>ReadListLanguage(string path, List<string> lagNames)
     {
