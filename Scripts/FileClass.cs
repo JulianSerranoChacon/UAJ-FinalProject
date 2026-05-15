@@ -98,22 +98,16 @@ public class FileClass
                 XmlNode lang = texts[i].ChildNodes[j];
                 //Cambiamos el idioma del localCore y anadimos traduccion al Diccionarioç
 
-                //Si el idoma no existe en la configuracion lo creo en el mapa sin configuracion (default)
+                //Si el idoma no existe en la configuracion lo creo en el mapa y la lista de nombres sin configuracion (default)
                 if (!ret.ContainsKey(lang.Name))
                 {
                     langNames.Add(langNames);
                     ret.Add(lang.Name,new Dictionary<uint, string>());
                 }
                     
-
                 //introduzco el texto en el idioma correspondiente con su id
                 ret[lang.Name].Add(id,lang.InnerText);
-                //LocalCore.Instance().ChangeLang(j);
-                //LocalCore.Instance().SetLine(id, lang.InnerText);
             }
-
-            //Reseteamos el lenguaje del LocalCore (incio de los array de las claves del Diccionario) ¿Por qué?
-            //LocalCore.Instance().ChangeLang(0);
         }
 
         foreach (var item in ret)
@@ -127,6 +121,7 @@ public class FileClass
                     " -> " + values.Value);
             }
         }
+
         return ret;
     }
 
