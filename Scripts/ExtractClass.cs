@@ -124,19 +124,9 @@ public class ExtractClass
     //Solo llamar cuando iniciamos juego Y hemos extraido strings
     public void GatherTMPReferences()
     {
-        List<TMP_Text> tmp = new List<TMP_Text>();
-
-        //cogemos primero la direccion de las escena en la que estamos
-        int activeBuildIndex = SceneManager.GetActiveScene().buildIndex ;
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
-            //En caso de que ya estemos en la escena, no la cargamos
-            if (i != activeBuildIndex)
-            {
-                SceneManager.LoadSceneAsync(i,LoadSceneMode.Additive);
-                Debug.Log(SceneManager.GetSceneByBuildIndex(i).isLoaded);
-            }
-            foreach (var root in SceneManager.GetSceneByBuildIndex(i).GetRootGameObjects())
+            List<TMP_Text> tmp = new List<TMP_Text>();
+            //cogemos primero la direccion de las escena en la que estamos
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
             {
                 tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
                 foreach (TMP_Text text in tmp)
@@ -146,13 +136,7 @@ public class ExtractClass
                 tmp.Clear();
             }
 
-            //cerramos la escena antes de irnos a la siguiente escena
-            if (i != activeBuildIndex)
-            {
-                Debug.Log(SceneManager.GetSceneByBuildIndex(i).isLoaded);
-                SceneManager.UnloadSceneAsync(i,UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
-            }
-        }
+        
     }
 
 }
