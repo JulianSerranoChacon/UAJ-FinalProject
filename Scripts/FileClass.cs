@@ -151,13 +151,16 @@ public class FileClass
             //Nombre del Idioma
             //string langName = node.ChildNodes.Item(0).InnerText;
             string langName = node.ChildNodes["Nombre"].InnerText;
+
+            //Nombre del lenguaje
             langNames.Add(langName);
             languagesOrder.Add(langName);
 
+            //Metemos el lenguaje devuelto con los idiomas y sus parametros
             ret[langName] = node;
             UnityEngine.Debug.Log(node.ChildNodes.Item(0).InnerText);
         }
+        //devolvemos un mapa con los idiomas y sus parametros
         return ret;
-
     }
 }
