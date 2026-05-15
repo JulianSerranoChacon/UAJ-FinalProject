@@ -79,14 +79,13 @@ public class InternationalitationGUI : EditorWindow
             if (GUILayout.Button("Write To XML"))
             {
                 WriteToXML();
-            }
-
+            }*/
             //Boton que ejecuta la lectura de las cadenas de strings de un XML concreto
             if (GUILayout.Button("Read from XML"))
             {
                 ReadFromXML();
             }
-            */
+            
         }
     }
 
@@ -130,7 +129,7 @@ public class InternationalitationGUI : EditorWindow
         if (!string.IsNullOrEmpty(selectedPath))
         {
             //file.ReadXML(selectedPath);
-            List<string> langNames=new List<string>();
+            List<string> langNames = new List<string>();
             langNames.Add("Español");
             langNames.Add("English");
             inter.ReadFromXML(selectedPath,langNames);

@@ -10,7 +10,6 @@ public class LocalInterface
 
 #region Singleton
     //La clase necesitara ser un singleton ya que solo queremos que exista una
-
     private static LocalInterface _instance;
 
     public static LocalInterface Instance()
@@ -79,7 +78,7 @@ public class LocalInterface
     public void StartInExecution(string path, int lang)
     {
         List<string> langNames = new List<string>();
-        langNames.Add("Español");
+        langNames.Add("Espaï¿½ol");
         langNames.Add("English");
         _files.ReadXML(path, langNames);
         SceneManager.sceneLoaded += NewScene;
