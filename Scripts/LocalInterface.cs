@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml;
 
 public class LocalInterface
 {
@@ -55,9 +57,9 @@ public class LocalInterface
     {
         _files.ReadXML(path);
     }
-    public string[] ReadListIdioms(string path)
+    public Dictionary<string, XmlNode>ReadListIdioms(string path, List<string> lagNames)
     {
-        return _files.ReadXMLIdioms(path);
+        return _files.ReadXMLIdioms(path,lagNames);
     }
 
     public void GetLine(int ID)
