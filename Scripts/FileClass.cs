@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEditor;
 using TMPro;
 using System.Data;
-using System.Diagnostics;
 
 public class FileClass
 {
@@ -98,7 +97,7 @@ public class FileClass
                 //introduzco el texto en el idioma correspondiente con su id
                 Debug.Log(lang.InnerXml);
                 Debug.Log(lang.Name);
-                ret[lang.InnerXml].Add(id,lang.InnerText);
+                ret[lang.Name].Add(id,lang.InnerText);
                 //LocalCore.Instance().ChangeLang(j);
                 //LocalCore.Instance().SetLine(id, lang.InnerText);
             }
@@ -107,10 +106,13 @@ public class FileClass
             //LocalCore.Instance().ChangeLang(0);
         }
 
-        Debug.log(ret.ToString());
-        foreach(Dictionary<uint, string>i in ret)
+        foreach (var item in ret)
         {
-            Debug.log(i.ToString());
+            UnityEngine.Debug.Log(item.Key);
+            foreach (var values in item.Value)
+            {
+                UnityEngine.Debug.Log(values.Value);
+            }
         }
 
         return ret;

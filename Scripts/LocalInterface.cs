@@ -9,7 +9,6 @@ public class LocalInterface
 
 #region Singleton
     //La clase necesitara ser un singleton ya que solo queremos que exista una
-
     private static LocalInterface _instance;
 
     public static LocalInterface Instance()
@@ -77,7 +76,10 @@ public class LocalInterface
 
     public void StartInExecution(string path, int lang)
     {
-        _files.ReadXML(path);
+        List<string> langNames = new List<string>();
+        langNames.Add("Español");
+        langNames.Add("English");
+        _files.ReadXML(path, langNames);
         //_extract.GatherTMPReferences();
         //if (scan == true)
             //Extraer scriptable objects a lo mejor?
@@ -88,6 +90,6 @@ public class LocalInterface
     {
         _core.ClearReferences();
         _extract.GatherTMPReferences();
-        _core.NewScene();
+        //_core.NewScene();
     }
 }
