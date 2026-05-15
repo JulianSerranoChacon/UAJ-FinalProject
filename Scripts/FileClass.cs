@@ -7,15 +7,10 @@ using TMPro;
 
 public class FileClass
 {
-
     public FileClass() {}
 
-    //Enumerado que indica el nombre con el que se escriben los nodos hijos 
-    public enum Language
-    {
-        es,
-        en
-    }
+    //Lista de los idiomas ordenados al leer el XML de lenguajes
+    private List<string> languagesOrder = new List<string>();
 
     public void WriteXML(string path)
     {
@@ -34,7 +29,9 @@ public class FileClass
         //Recorremos todo el unorderedMap
         foreach(KeyValuePair<uint, string[]> pair in LocalCore.Instance().GetLines)
         {
+            //id es el ID del texto el stringTable del localCore
             uint id = pair.Key;
+            //Cantidad de traducciones que tiene el texto ID
             string[]texts = pair.Value;
 
             //Nodo del texto y seteo de su id en el XML
@@ -44,17 +41,21 @@ public class FileClass
             //Recorremos el array de los textos traducidos a los distintos idiomas
             for(int i = 0; i < texts.Length; i++)
             {
-                string langName = ((Language)i).ToString();
-
+                string langName;
+                //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
+                //XML como su hijo y con la etiqueta langName correspondiente
+                if(i < languagesOrder.Count)
+                    langName = texts[i];
+                else
+                    langName = "langNotDefined_" + i;
+                
                 //Creamos el nodo hijo del texto
                 XmlElement langNode = xmlDoc.CreateElement(langName);
                 langNode.InnerText = texts[i];
-
                 textNode.AppendChild(langNode);
             }
             root.AppendChild(textNode);
         }
-
         //Antes de acabar guardamos el archivo en la ruta
         xmlDoc.Save(path);
     }
@@ -84,10 +85,6 @@ public class FileClass
             {
                 //Nodo hijo
                 XmlNode lang = texts[i].ChildNodes[j];
-
-
-                //Debug.Log(lang.InnerText);
-
                 //Cambiamos el idioma del localCore y anadimos traduccion al Diccionario
                 LocalCore.Instance().ChangeLang(j);
                 LocalCore.Instance().SetLine(id, lang.InnerText);
@@ -108,37 +105,30 @@ public class FileClass
 
         xmlDoc.Load(filename);
 
-
         //Cogemos todos los textos etiquetados con text  
         XmlNodeList texts = xmlDoc.GetElementsByTagName("Lenguaje");
 
-
         Debug.Log(texts.Count);
-
 
         //ret = new string[texts.Count];
 
+        //Limpiamos primero el orden de los idiomas leidos en el XML
+        languagesOrder.Clear();
+
         foreach (XmlNode node in texts)
         {
-            
             //Id del texto (sera la clave del Diccionario de LocalCore)
             uint id = uint.Parse(node.Attributes["id"].Value);
 
             string langName = node.ChildNodes.Item(0).InnerText;
             langNames.Add(langName);
+            languagesOrder.Add(langName);
 
-            
             ret[langName] = node;
-
-
             //ret = node.Attributes["Nombre"].InnerText;
 
             Debug.Log(node.ChildNodes.Item(0).InnerText);
-
-
         }
-
-
         return ret;
 
     }
