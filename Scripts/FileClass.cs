@@ -95,8 +95,9 @@ public class FileClass
                 //Cambiamos el idioma del localCore y anadimos traduccion al Diccionarioç
 
                 //introduzco el texto en el idioma correspondiente con su id
-                Debug.Log(lang.InnerXml);
-                Debug.Log(lang.Name);
+                if(!ret.ContainsKey(lang.Name))  
+                    ret.Add(lang.Name,new Dictionary<uint, string>());
+
                 ret[lang.Name].Add(id,lang.InnerText);
                 //LocalCore.Instance().ChangeLang(j);
                 //LocalCore.Instance().SetLine(id, lang.InnerText);
