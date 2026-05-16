@@ -66,6 +66,7 @@ public class LocalInterface
     public void GetLine(int ID)
     {
         //loqueseaClass
+        _core.GetLine(ID);
     }
 
     public void FullExtract(string path)
