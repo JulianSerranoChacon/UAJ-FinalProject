@@ -12,7 +12,7 @@ public class FileClass
 
     //Lista de los idiomas ordenados al leer el XML de lenguajes
     private List<string> languagesOrder = new List<string>();
-    private public Dictionary<string, uint> transLang = new Dictionary<string, uint>();
+    private Dictionary<string, uint> transLang = new Dictionary<string, uint>();
 
     public void WriteXML(string path)
     {
@@ -88,7 +88,7 @@ public class FileClass
         for(int i = 0; i < langNames.Count ; i++)
         {
             if(!transLang.ContainsKey(langNames[i]))
-                throw "Not valid idiom";
+                throw new ArgumentException("Inavlid Language.");
 
             ret.Add(transLang[langNames[i]],new Dictionary<uint, string>());
         }
@@ -112,9 +112,9 @@ public class FileClass
                 //Cambiamos el idioma del localCore y anadimos traduccion al Diccionarioç
 
                 //Si el idoma no existe en la configuracion lo creo en el mapa y la lista de nombres sin configuracion (default)
-                if (!ret.ContainsKey(lang.Name))
-                {
-                    throw "Not valid idiom";
+                if (!ret.ContainsKey(transLang[lang.Name]))
+                {                    
+                    throw new ArgumentException("Inavlid Language.");
                 }
                     
                 //introduzco el texto en el idioma correspondiente con su id
