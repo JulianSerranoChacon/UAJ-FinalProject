@@ -176,7 +176,7 @@ public class InternationalitationGUI : EditorWindow
         {
             List<string> list = new List<string>();
             //file.ReadXML(selectedPath);
-            Dictionary<uint, XmlNode> langList = inter.ReadListLanguage(selectedPath, list);
+            Dictionary<uint, XmlNode> langList = inter.ReadListLanguage(selectedPath, list, LocalCore.Instance().GetLanguageMap());
         }
     }
 
