@@ -150,22 +150,22 @@ public class FileClass
 
         xmlDoc.Load(filename);
 
-        //Cogemos todos los textos etiquetados con text  
+        //Cogemos todos los textos etiquetados con lenguaje 
         XmlNodeList texts = xmlDoc.GetElementsByTagName("Lenguaje");
 
-        UnityEngine.Debug.Log(texts.Count);
-
+        //Debug.Log(texts.Count);
         //Limpiamos primero el orden de los idiomas leidos en el XML
         languagesOrder.Clear();
 
         foreach (XmlNode node in texts)
         {
-            //Id del texto
+            //Id del lenguaje
             uint id = uint.Parse(node.Attributes["id"].Value);
 
-            //Nombre del Idioma
+            //Nombre del Idioma (etiqueta Lenguaje)
             string langName = node.ChildNodes.Item(0).InnerText;
 
+            //Map con clave el nombre del idioma y el id correspondiente
             transLang.Add(langName,id);
 
             //Nombre del lenguaje
@@ -174,7 +174,7 @@ public class FileClass
 
             //Metemos el lenguaje devuelto con los idiomas y sus parametros
             ret[id] = node;
-            UnityEngine.Debug.Log(langName);
+            //Debug.Log(langName);
         }
         //devolvemos un mapa con los idiomas y sus parametros
         return ret;
