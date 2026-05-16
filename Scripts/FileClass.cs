@@ -41,14 +41,44 @@ public class FileClass
             {
                 texts[pair.Key] = s.Value;
             }*/
+            Dictionary<uint, XmlElement> textnodes = new  Dictionary<uint, XmlElement>();
+
+            foreach(KeyValuePair<uint, string> item in pair.values[langId])
+                {
+                    string langName;
+                    //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
+                    //XML como su hijo y con la etiqueta langName correspondiente
+                    if(i < languagesOrder.Count)
+                        langName = languagesOrder[(int)langId];
+                    else
+                        langName = "langNotDefined_" + langId;
+
+                    //Creamos el nodo hijo del texto
+                    if (textnodes.ContainsKey(item.key))
+                    {
+                        textnodes.Add(item.key, xmlDoc.CreateElement("text"));
+                        textnodes[item.key].SetAttribute("id", item.key.ToString());
+                        root.AppendChild(textnodes[item.key]);
+                    }
+
+                    //Creamos el nodo hijo del texto
+                    XmlElement langNode = xmlDoc.CreateElement(langName);
+
+                    if(!pair.Value.ContainsKey(item.Key))
+                        throw new ArgumentException("el idioma " + langName + " no contiene el texto " + item.Key);
+
+                    langNode.InnerText = pair.Value[item.Key];
+                    textnodes[item.Key].AppendChild(langNode);
+                }
+            }
         
 
-            //Recorremos el array de los textos traducidos a los distintos idiomas
+            /*//Recorremos el array de los textos traducidos a los distintos idiomas
             for(uint i = 0; i < lenguages; i++)
             {
                 //Nodo del texto y seteo de su id en el XML
                 XmlElement textNode = xmlDoc.CreateElement("text");
-                textNode.SetAttribute("id", i);
+                textNode.SetAttribute("id", i.ToString());
 
                 string langName;
                 //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
@@ -68,7 +98,7 @@ public class FileClass
                 textNode.AppendChild(langNode);
             }
             root.AppendChild(textNode);
-        }
+        }*/
         //Antes de acabar guardamos el archivo en la ruta
         xmlDoc.Save(path);
     }
