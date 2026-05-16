@@ -12,6 +12,7 @@ public class FileClass
 
     //Lista de los idiomas ordenados al leer el XML de lenguajes
     private List<string> languagesOrder = new List<string>();
+    private public Dictionary<string, uint> transLang = new Dictionary<string, uint>();
 
     public void WriteXML(string path)
     {
@@ -71,7 +72,7 @@ public class FileClass
     public Dictionary<uint, Dictionary<uint, string>> ReadXML(string filename, List<string> langNames) 
     {
         // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
-        Dictionary<uint, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
+        Dictionary<uint, Dictionary<uint, string>> ret = new Dictionary<uint, Dictionary<uint, string>>();
 
         if(langNames == null)
             langNames = new List<string>();
@@ -85,7 +86,12 @@ public class FileClass
 
         //creo los idiomas con sus tablas dentro del diccionario
         for(int i = 0; i < langNames.Count ; i++)
-            ret.Add(langNames[i],new Dictionary<uint, string>());
+        {
+            if(!transLang.ContainsKey(langNames[i]))
+                throw "Not valid idiom";
+
+            ret.Add(transLang[langNames[i]],new Dictionary<uint, string>());
+        }
 
         //Recorremos la lista de textos del XML
 
@@ -108,12 +114,11 @@ public class FileClass
                 //Si el idoma no existe en la configuracion lo creo en el mapa y la lista de nombres sin configuracion (default)
                 if (!ret.ContainsKey(lang.Name))
                 {
-                    langNames.Add(lang.Name);
-                    ret.Add(lang.Name,new Dictionary<uint, string>());
+                    throw "Not valid idiom";
                 }
                     
                 //introduzco el texto en el idioma correspondiente con su id
-                ret[lang.Name].Add(id,lang.InnerText);
+                ret[transLang[lang.Name]].Add(id,lang.InnerText);
             }
         }
 
@@ -135,7 +140,7 @@ public class FileClass
 
     public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames)
     {
-        Dictionary<uint, XmlNode> ret = new Dictionary<string, XmlNode>();
+        Dictionary<uint, XmlNode> ret = new Dictionary<uint, XmlNode>();
 
         if(langNames == null)
             langNames = new List<string>();
@@ -160,6 +165,8 @@ public class FileClass
 
             //Nombre del Idioma
             string langName = node.ChildNodes.Item(0).InnerText;
+
+            transLang.Add(langName,id);
 
             //Nombre del lenguaje
             langNames.Add(langName);
