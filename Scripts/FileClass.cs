@@ -44,12 +44,13 @@ public class FileClass
         
             //Nodo del texto y seteo de su id en el XML
             XmlElement textNode = xmlDoc.CreateElement("text");
-            textNode.SetAttribute("id", langId.ToString());
 
             //Recorremos el array de los textos traducidos a los distintos idiomas
             for(uint i = 0; i < lenguages; i++)
-
             {
+                
+                textNode.SetAttribute("id", i);
+
                 string langName;
                 //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
                 //XML como su hijo y con la etiqueta langName correspondiente
