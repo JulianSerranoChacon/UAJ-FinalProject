@@ -57,9 +57,10 @@ public class ExtractClass
                 if (val is string)
                 {
                     scriptObjRef[ID] = new Pair<ScriptableObject, FieldInfo>(obj, m);
-
+                    Debug.Log(ID);
                     LocalCore.Instance().SetLine(ID, (string)val);
                     LocalCore.Instance().SetScriptableObjectReference(ID, obj, m);
+
                     ID++;
                 }
             }
@@ -71,7 +72,6 @@ public class ExtractClass
         List<TMP_Text> tmp = new List<TMP_Text>();
 
         //Se crea una nueva lista al principio para evitar que se llene con infomacion repetida
-        uint ID = 0;
         //cogemos primero la direccion de las escena en la que estamos
         string activeScenePath = SceneManager.GetActiveScene().path;
 
@@ -92,9 +92,8 @@ public class ExtractClass
                 {
                     LocalCore.Instance().SetLine(ID, text.text);
                     TextUpdate temp = text.AddComponent<TextUpdate>();
+                    Debug.Log(ID);
                     temp.ID = ID;
-                    //objRef[ID] = text;
-                    //LocalCore.Instance().SetTMPReference(ID, text);
                     ID++;
                 }
                 tmp.Clear();
