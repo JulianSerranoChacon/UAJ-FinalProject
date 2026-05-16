@@ -12,7 +12,6 @@ public class FileClass
 
     //Lista de los idiomas ordenados al leer el XML de lenguajes
     private List<string> languagesOrder = new List<string>();
-    private Dictionary<string, int> reverLanguagesOrder = new Dictionary<string, int>(); 
 
     public void WriteXML(string path)
     {
@@ -29,12 +28,19 @@ public class FileClass
 
 
         //Recorremos todo el unorderedMap
-        foreach(KeyValuePair<uint, string[]> pair in LocalCore.Instance().GetLines)
+        foreach(KeyValuePair<uint, Dictionary<uint, string>> pair in LocalCore.Instance().GetLines)
         {
             //id es el ID del texto el stringTable del localCore
             uint id = pair.Key;
             //Cantidad de traducciones que tiene el texto ID
-            string[]texts = pair.Value;
+            string[] texts = new string[LocalCore.Instance().getLang()];
+
+            foreach (KeyValuePair<uint,string> s in pair.Value)
+            {
+                texts[pair.Key] = s.Value;
+            }
+            
+
 
             //Nodo del texto y seteo de su id en el XML
             XmlElement textNode = xmlDoc.CreateElement("text");
@@ -47,7 +53,7 @@ public class FileClass
                 //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
                 //XML como su hijo y con la etiqueta langName correspondiente
                 if(i < languagesOrder.Count)
-                    langName = languagesOrder[i];
+                    langName = texts[i];
                 else
                     langName = "langNotDefined_" + i;
                 
@@ -65,20 +71,10 @@ public class FileClass
     public Dictionary<string, Dictionary<uint, string>> ReadXML(string filename, List<string> langNames) 
     {
         // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
-        //Dictionary<string, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
+        Dictionary<string, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
 
-        /*if(langNames == null)
-            langNames = new List<string>();*/
-
-        //Rellena languageOrder y reverseLaanguageOrder con la informacion dada
-        if (langNames != null)
-        {
-            languagesOrder = langNames;
-            for(int i = 0; i < languagesOrder.Count; i++)
-            {
-                reverLanguagesOrder[langNames[i]] = i;
-            }
-        }
+        if(langNames == null)
+            langNames = new List<string>();
 
         //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
@@ -88,18 +84,8 @@ public class FileClass
         XmlNodeList texts = xmlDoc.GetElementsByTagName("text");
 
         //creo los idiomas con sus tablas dentro del diccionario
-        //for(int i = 0; i < langNames.Count ; i++)
-        //    ret.Add(langNames[i],new Dictionary<uint, string>());
-
-        /*int nLg = texts[0].ChildNodes.Count;
-
-        for (int j = 0; j < numLang; j++)
-        {
-            XmlNode lang = texts[0].ChildNodes[j];
-
-            if(!langNames.Contains(lang.Name))
-                langNames.Add(lang.Name);
-        }*/
+        for(int i = 0; i < langNames.Count ; i++)
+            ret.Add(langNames[i],new Dictionary<uint, string>());
 
         //Recorremos la lista de textos del XML
 
@@ -117,39 +103,33 @@ public class FileClass
             {
                 //Nodo hijo
                 XmlNode lang = texts[i].ChildNodes[j];
-                //Cambiamos el idioma del localCore y anadimos traduccion al Diccionario
+                //Cambiamos el idioma del localCore y anadimos traduccion al Diccionarioç
 
                 //Si el idoma no existe en la configuracion lo creo en el mapa y la lista de nombres sin configuracion (default)
-                /*if (!ret.ContainsKey(lang.Name))
+                if (!ret.ContainsKey(lang.Name))
                 {
                     langNames.Add(lang.Name);
                     ret.Add(lang.Name,new Dictionary<uint, string>());
-                }*/
-                if(!reverLanguagesOrder.ContainsKey(lang.Name))
-                {
-                    reverLanguagesOrder[lang.Name] = languagesOrder.Count;
-                    languagesOrder.Add(lang.Name);
                 }
                     
                 //introduzco el texto en el idioma correspondiente con su id
-                //ret[lang.Name].Add(id,lang.InnerText);
-                LocalCore.Instance().SetLine(id, reverLanguagesOrder[lang.Name], lang.InnerText);
+                ret[lang.Name].Add(id,lang.InnerText);
             }
         }
 
-        //foreach (var item in ret)
-        //{
-        //    UnityEngine.Debug.Log("Idioma: " + item.Key);
+        foreach (var item in ret)
+        {
+            UnityEngine.Debug.Log("Idioma: " + item.Key);
 
-        //    foreach (var values in item.Value)
-        //    {
-        //        UnityEngine.Debug.Log(
-        //            "ID: " + values.Key +
-        //            " -> " + values.Value);
-        //    }
-        //}
+            foreach (var values in item.Value)
+            {
+                UnityEngine.Debug.Log(
+                    "ID: " + values.Key +
+                    " -> " + values.Value);
+            }
+        }
 
-        return new Dictionary<string, Dictionary<uint, string>> ();
+        return ret;
     }
 
 
