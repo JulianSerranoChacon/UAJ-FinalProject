@@ -19,12 +19,13 @@ public class LocalCore
     private Dictionary<uint, Dictionary<uint, string>> stringMap;
     private Dictionary<uint, TMP_Text> refTable;
     private Dictionary<uint, Pair<ScriptableObject, FieldInfo>> refScriptObj;
+
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
     private uint currentLang;
 
     //public IReadOnlyDictionary<uint, string[]> GetLines => stringTable;
-    public IReadOnlyDictionary<string, Dictionary<uint, string>> GetMapLines => stringMap;
+    public IReadOnlyDictionary<uint, Dictionary<uint, string>> GetLines => stringMap;
 #endregion
 
 #region Singleton
@@ -54,7 +55,7 @@ public class LocalCore
 
         languages = langAm;
         //stringTable = new Dictionary<uint, string[]>();
-        stringMap = new Dictionary<string, Dictionary<uint, string>>();
+        stringMap = new Dictionary<uint, Dictionary<uint, string>>();
         refTable = new Dictionary<uint, TMP_Text>();
         refScriptObj = new Dictionary<uint, Pair<ScriptableObject, FieldInfo>>();  
 
@@ -92,15 +93,23 @@ public class LocalCore
             stringTable[ID] = box;
         }*/
 
-        stringMap[currentLang][ID] = value;
+        if (!stringMap.ContainsKey(currentLang)){
+            stringMap.Add(currentLang, new Dictionary<uint, string>());
+        }
+        stringMap[currentLang].Add(ID, value);
         //Debug.Log(currentLang);
 
         
     }
 
+    public int getLang()
+    {
+        return languages;
+    }
+
     //Cambia el idioma que esta usando la clase
     //Falla si es un idioma fuera del alcance especificado.
-    public void ChangeLang(int newLang)
+    public void ChangeLang(uint newLang)
     {
         if(newLang >= languages)
             throw new ArgumentException("New language value exceeding range of languages.");
