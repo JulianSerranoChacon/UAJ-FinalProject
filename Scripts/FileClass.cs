@@ -170,7 +170,7 @@ public class FileClass
     }
 
 
-    public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames)
+    public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames,Dictionary<uint, string> sM)
     {
         Dictionary<uint, XmlNode> ret = new Dictionary<uint, XmlNode>();
 
@@ -207,6 +207,11 @@ public class FileClass
             //Metemos el lenguaje devuelto con los idiomas y sus parametros
             ret[id] = node;
             UnityEngine.Debug.Log(langName);
+        }
+
+        for(int i = 0; i < ret.Count; i++)
+        {
+            sM.Add(i,new mapDictionary<uint, string>());
         }
         //devolvemos un mapa con los idiomas y sus parametros
         return ret;
