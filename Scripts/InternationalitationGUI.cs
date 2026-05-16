@@ -19,6 +19,7 @@ public class InternationalitationGUI : EditorWindow
     // Incluye una entrada en el menu superior de Unity
     [MenuItem("Custom Plugins/Internationalitaion Plugin")]
     
+    
     public static void ShowWindow()
     {
         // Nombre del "Tab" en la ventna del editor
