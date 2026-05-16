@@ -109,7 +109,6 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
-        //SetAllStrings();
     }
 
     #region Reference gaming
@@ -125,8 +124,8 @@ public class LocalCore
         foreach(var item in refScriptObj)
         {
             string[] box;
-            object val =item.Value.second.GetValue(item.Value.first);
-            if (stringTable.TryGetValue(uint.Parse(val.ToString()),out box))
+            object val = item.Value.second.GetValue(item.Value.first);
+            if (stringTable.TryGetValue(uint.Parse(val.ToString()), out box))
             {
                 item.Value.second.SetValue(item.Value.first, box[currentLang]);
             }

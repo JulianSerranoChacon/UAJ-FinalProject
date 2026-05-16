@@ -22,7 +22,7 @@ public class ExtractClass
     private string scriptablePath = "Assets";
     private uint ID = 0;
 
-    private Dictionary<uint,Pair< ScriptableObject,FieldInfo>> scriptObjRef;
+    private Dictionary<uint,Pair<ScriptableObject,FieldInfo>> scriptObjRef;
 
     public ExtractClass(bool scan, string path) 
     {

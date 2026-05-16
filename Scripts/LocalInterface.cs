@@ -41,6 +41,7 @@ public class LocalInterface
     public void ChangeLang(int newLang)
     {
         _core.ChangeLang(newLang);
+        _extract.ReplaceStrings();
     }
 
     public void Extract()
