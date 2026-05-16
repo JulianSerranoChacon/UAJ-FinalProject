@@ -42,13 +42,12 @@ public class FileClass
                 texts[pair.Key] = s.Value;
             }*/
         
-            //Nodo del texto y seteo de su id en el XML
-            XmlElement textNode = xmlDoc.CreateElement("text");
 
             //Recorremos el array de los textos traducidos a los distintos idiomas
             for(uint i = 0; i < lenguages; i++)
             {
-                
+                //Nodo del texto y seteo de su id en el XML
+                XmlElement textNode = xmlDoc.CreateElement("text");
                 textNode.SetAttribute("id", i);
 
                 string langName;
