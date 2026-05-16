@@ -15,7 +15,6 @@ public class LocalCore
     //En cada posicion del array se encuentra el string en un idioma concreto.
     private int languages;
     private Dictionary<uint, string[]> stringTable;
-    private Dictionary<uint, TMP_Text> refTable;
     private Dictionary<uint, Pair<ScriptableObject, FieldInfo>> refScriptObj;
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
@@ -51,7 +50,6 @@ public class LocalCore
 
         languages = langAm;
         stringTable = new Dictionary<uint, string[]>();
-        refTable = new Dictionary<uint, TMP_Text>();
         refScriptObj = new Dictionary<uint, Pair<ScriptableObject, FieldInfo>>();  
 
         currentLang = 0;
@@ -114,33 +112,12 @@ public class LocalCore
         //SetAllStrings();
     }
 
-    public void SceneLoaded()
-    {
-        SetTMPStrings();
-    }
-
     #region Reference gaming
-    public void SetTMPReference(uint ID, TMP_Text reff)
-    {
-        refTable[ID] = reff;
-    }
+
 
     public void SetScriptableObjectReference(uint ID, ScriptableObject obj, FieldInfo info)
     {
         refScriptObj[ID] = new Pair<ScriptableObject, FieldInfo>(obj, info);
-    }
-
-    //Se cambia el idioma y todas las respectivas referencias
-    private void SetTMPStrings()
-    {
-        foreach(TMP_Text reff in refTable.Values)
-        {
-            string[] box;
-
-            if(stringTable.TryGetValue(uint.Parse(reff.text), out box))
-                reff.text = box[currentLang];
-        }
-        
     }
 
     private void SetScriptableStrings()
@@ -156,10 +133,6 @@ public class LocalCore
         }
     }
 
-    public void ClearReferences()
-    {
-        refTable.Clear();
-    }
     #endregion
 
 #endregion

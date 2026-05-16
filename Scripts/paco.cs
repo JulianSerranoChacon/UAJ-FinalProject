@@ -21,6 +21,10 @@ public class paco : MonoBehaviour
             LocalInterface.Instance().StartInExecution("Assets/Scripts/UAJ-FinalProject/Scripts/example.xml", 0);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        else
+        {
+            Destroy(this);
+        }
     }
      void Start()
     {

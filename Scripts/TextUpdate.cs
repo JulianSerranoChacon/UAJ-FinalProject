@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class TextUpdate : MonoBehaviour
 {
     [SerializeField]
-    public int ID;
+    public uint ID;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()

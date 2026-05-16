@@ -63,10 +63,10 @@ public class LocalInterface
         return _files.ReadXMLLanguage(path,lagNames);
     }
 
-    public void GetLine(int ID)
+    public string GetLine(uint ID)
     {
         //loqueseaClass
-        _core.GetLine(ID);
+       return _core.GetLine(ID);
     }
 
     public void FullExtract(string path)
@@ -80,17 +80,8 @@ public class LocalInterface
     {
         List<string> langNames = new List<string>();
         _files.ReadXML(path, langNames);
-        SceneManager.sceneLoaded += NewScene;
-        //_extract.GatherTMPReferences();
-        //if (scan == true)
-        //Extraer scriptable objects a lo mejor?
         _core.ChangeLang(lang);
     }
 
-    public void NewScene(Scene scene, LoadSceneMode mode)
-    {
-        _core.ClearReferences();
-        _extract.GatherTMPReferences();
-        _core.SceneLoaded();
-    }
+
 }

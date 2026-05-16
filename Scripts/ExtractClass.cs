@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
+using Unity.VisualScripting;
 
 
 public class ExtractClass 
@@ -21,14 +22,12 @@ public class ExtractClass
     private string scriptablePath = "Assets";
     private uint ID = 0;
 
-    private Dictionary<uint, TMP_Text> objRef;
     private Dictionary<uint,Pair< ScriptableObject,FieldInfo>> scriptObjRef;
 
     public ExtractClass(bool scan, string path) 
     {
         scanScriptables= scan;
         scriptablePath = path;
-        objRef = new Dictionary<uint, TMP_Text>();
         scriptObjRef = new Dictionary<uint, Pair<ScriptableObject, FieldInfo>>();
     }
 
@@ -75,30 +74,34 @@ public class ExtractClass
 
         for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
         {
+       
             string scenePath = EditorBuildSettings.scenes[i].path;
             //En caso de que ya estemos en la escena, no la cargamos
             if (scenePath != activeScenePath)
             {
                 EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
             }
-
-            foreach (var root in SceneManager.GetSceneByBuildIndex(i).GetRootGameObjects())
+            Scene currentScene = SceneManager.GetSceneByBuildIndex(i);
+            foreach (var root in currentScene.GetRootGameObjects())
             {
                 tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
                 foreach (TMP_Text text in tmp)
                 {
                     LocalCore.Instance().SetLine(ID, text.text);
-                    objRef[ID] = text;
+                    TextUpdate temp = text.AddComponent<TextUpdate>();
+                    temp.ID = ID;
+                    //objRef[ID] = text;
                     //LocalCore.Instance().SetTMPReference(ID, text);
                     ID++;
                 }
                 tmp.Clear();
             }
-
+            EditorSceneManager.MarkSceneDirty(currentScene);
+            EditorSceneManager.SaveScene(currentScene);
             //cerramos la escena antes de irnos a la siguiente escena
             if (scenePath != activeScenePath)
             {
-                EditorSceneManager.CloseScene(SceneManager.GetSceneByBuildIndex(i), true);
+                EditorSceneManager.CloseScene(currentScene, true);
                 
             }
         }
@@ -110,32 +113,11 @@ public class ExtractClass
 
     public void ReplaceStrings()
     {
-        foreach(var item in objRef)
-        {
-            item.Value.text = item.Key.ToString();
-        }
         foreach(var item in scriptObjRef)
         {
             item.Value.second.SetValue(item.Value.first, item.Key.ToString());
         }
     }
     
-    //CUIDADO: NO LLAMAR FUERA DE LUGAR
-    //Recoge las referencias de todos los TMP_Text
-    //Solo llamar cuando cambiamos escena
-    public void GatherTMPReferences()
-    {
-            List<TMP_Text> tmp = new List<TMP_Text>();
-            //cogemos primero la direccion de las escena en la que estamos
-            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
-            {
-                tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
-                foreach (TMP_Text text in tmp)
-                {
-                    LocalCore.Instance().SetTMPReference(uint.Parse(text.text), text);
-                }
-                tmp.Clear();
-            }
-    }
 
 }
