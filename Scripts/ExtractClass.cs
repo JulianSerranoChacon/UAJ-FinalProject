@@ -51,15 +51,18 @@ public class ExtractClass
         Type objectType = obj.GetType();
         foreach (FieldInfo m in objectType.GetFields())
         {
+            if (m.Attributes ==FieldAttributes.Public)
+            {
                 object val = m.GetValue((obj));
-                if(val is string)
+                if (val is string)
                 {
-                    scriptObjRef[ID] = new Pair<ScriptableObject,FieldInfo>(obj,m);
-       
+                    scriptObjRef[ID] = new Pair<ScriptableObject, FieldInfo>(obj, m);
+
                     LocalCore.Instance().SetLine(ID, (string)val);
                     LocalCore.Instance().SetScriptableObjectReference(ID, obj, m);
                     ID++;
-                }      
+                }
+            }
         }    
     }
 
@@ -153,7 +156,7 @@ public class ExtractClass
     {
         foreach(var item in scriptObjRef)
         {
-            item.Value.second.SetValue(item.Value.first, item.Key.ToString());
+           item.Value.second.SetValue(item.Value.first, item.Key.ToString());
         }
     }
     
