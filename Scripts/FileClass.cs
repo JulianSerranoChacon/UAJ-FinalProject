@@ -161,6 +161,8 @@ public class FileClass
         {
             //Id del lenguaje
             uint id = uint.Parse(node.Attributes["id"].Value);
+            
+            sM.Add(id,new mapDictionary<uint, string>());
 
             //Nombre del Idioma (etiqueta Lenguaje)
             string langName = node.ChildNodes.Item(0).InnerText;
@@ -175,11 +177,6 @@ public class FileClass
             //Metemos el lenguaje devuelto con los idiomas y sus parametros
             ret[id] = node;
             //Debug.Log(langName);
-        }
-
-        for(int i = 0; i < ret.Count; i++)
-        {
-            sM.Add(i,new mapDictionary<uint, string>());
         }
         //devolvemos un mapa con los idiomas y sus parametros
         return ret;
