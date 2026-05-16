@@ -78,8 +78,6 @@ public class LocalInterface
     public void StartInExecution(string path, int lang)
     {
         List<string> langNames = new List<string>();
-        langNames.Add("Espa�ol");
-        langNames.Add("English");
         _files.ReadXML(path, langNames);
         SceneManager.sceneLoaded += NewScene;
         //_extract.GatherTMPReferences();

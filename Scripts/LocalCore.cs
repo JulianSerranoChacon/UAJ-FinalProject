@@ -89,8 +89,9 @@ public class LocalCore
     public void SetLine(uint ID, int lang, string value)
     {
         string[] box;
-
-        if(stringTable.TryGetValue(ID, out box))
+        Debug.Log(languages);
+        Debug.Log(lang);
+        if (stringTable.TryGetValue(ID, out box))
             box[lang] = value;
         else
         {

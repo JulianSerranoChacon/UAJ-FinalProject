@@ -12,7 +12,7 @@ public class FileClass
 
     //Lista de los idiomas ordenados al leer el XML de lenguajes
     private List<string> languagesOrder = new List<string>();
-    private Dictionary<string, uint> reverLanguagesOrder = new Dictionary<string, uint>(); 
+    private Dictionary<string, int> reverLanguagesOrder = new Dictionary<string, int>(); 
 
     public void WriteXML(string path)
     {
@@ -47,7 +47,7 @@ public class FileClass
                 //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
                 //XML como su hijo y con la etiqueta langName correspondiente
                 if(i < languagesOrder.Count)
-                    langName = languageOrder[i];
+                    langName = languagesOrder[i];
                 else
                     langName = "langNotDefined_" + i;
                 
@@ -71,7 +71,7 @@ public class FileClass
             langNames = new List<string>();*/
 
         //Rellena languageOrder y reverseLaanguageOrder con la informacion dada
-        else (langNames != null)
+        if (langNames != null)
         {
             languagesOrder = langNames;
             for(int i = 0; i < languagesOrder.Count; i++)
@@ -127,8 +127,8 @@ public class FileClass
                 }*/
                 if(!reverLanguagesOrder.ContainsKey(lang.Name))
                 {
-                    reverLanguagesOrder[lang.Name] = languageOrder.Count;
-                    languageOrder.Add(lang.Name);
+                    reverLanguagesOrder[lang.Name] = languagesOrder.Count;
+                    languagesOrder.Add(lang.Name);
                 }
                     
                 //introduzco el texto en el idioma correspondiente con su id
@@ -137,19 +137,19 @@ public class FileClass
             }
         }
 
-        foreach (var item in ret)
-        {
-            UnityEngine.Debug.Log("Idioma: " + item.Key);
+        //foreach (var item in ret)
+        //{
+        //    UnityEngine.Debug.Log("Idioma: " + item.Key);
 
-            foreach (var values in item.Value)
-            {
-                UnityEngine.Debug.Log(
-                    "ID: " + values.Key +
-                    " -> " + values.Value);
-            }
-        }
+        //    foreach (var values in item.Value)
+        //    {
+        //        UnityEngine.Debug.Log(
+        //            "ID: " + values.Key +
+        //            " -> " + values.Value);
+        //    }
+        //}
 
-        return ret;
+        return new Dictionary<string, Dictionary<uint, string>> ();
     }
 
 
