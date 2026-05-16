@@ -41,7 +41,7 @@ public class LocalInterface
     public void ChangeLang(int newLang)
     {
         _core.ChangeLang(newLang);
-        _extract.ReplaceStrings();
+        _core.SetScriptableStrings();
     }
 
     public void Extract()
@@ -80,9 +80,14 @@ public class LocalInterface
     public void StartInExecution(string path, int lang)
     {
         List<string> langNames = new List<string>();
-        _files.ReadXML(path, langNames);
-        _core.ChangeLang(lang);
+        _files.ReadXML(path, langNames);  
+        _extract.setScriptableRefereces();
+        ChangeLang(lang);
     }
 
+    public void OnQuit()
+    {
+        _core.FlushScriptableReferences();  
+    }
 
 }
