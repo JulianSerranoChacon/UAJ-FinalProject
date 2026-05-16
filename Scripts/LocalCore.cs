@@ -49,7 +49,7 @@ public class LocalCore
     //Inicia los atributos de la clase
     //Establece el maximo de idiomas a langAm
 
-    public void Initiate(int langAm)
+    public void Initiate(uint langAm)
     {
         if(langAm <= 0)
             throw new ArgumentException("Ammount of languages cannot be negative or 0.");
@@ -100,7 +100,7 @@ public class LocalCore
         
     }
 
-    public int getLang()
+    public uint GetNumLangs()
     {
         return languages;
     }

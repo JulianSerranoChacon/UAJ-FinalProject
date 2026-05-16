@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class paco : MonoBehaviour
 {
     [SerializeField]
-    public int langs;
+    public uint langs;
     [SerializeField]
     public bool scanScriptables;
     [SerializeField]

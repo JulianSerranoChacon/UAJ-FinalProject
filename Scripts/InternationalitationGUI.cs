@@ -50,7 +50,7 @@ public class InternationalitationGUI : EditorWindow
                 if (langNum == null)
                     InitializeAll(1,scanScriptables,scriptablePath);
                 else
-                    InitializeAll(Int32.Parse(langNum),scanScriptables,scriptablePath);
+                    InitializeAll(uint.Parse(langNum),scanScriptables,scriptablePath);
                 setup = true;
             }
         }
@@ -144,7 +144,7 @@ public class InternationalitationGUI : EditorWindow
     }
 
 
-    void InitializeAll(int langinit, bool scan, string scrpath)
+    void InitializeAll(uint langinit, bool scan, string scrpath)
     {
         string selectedPath = EditorUtility.SaveFilePanel(
             "Select directory to save XML",

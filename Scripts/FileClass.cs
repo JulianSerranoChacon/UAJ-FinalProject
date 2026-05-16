@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
-using UnityEngine;
-using UnityEditor;
-using TMPro;
 using System.Data;
+using System.Xml;
+using TMPro;
+using UnityEditor;
+using UnityEngine;
 
 public class FileClass
 {
@@ -40,21 +41,20 @@ public class FileClass
             {
                 texts[pair.Key] = s.Value;
             }*/
-            
-
-
+        
             //Nodo del texto y seteo de su id en el XML
             XmlElement textNode = xmlDoc.CreateElement("text");
             textNode.SetAttribute("id", langId.ToString());
 
             //Recorremos el array de los textos traducidos a los distintos idiomas
-            for(int i = 0; i < lenguages; i++)
+            for(uint i = 0; i < lenguages; i++)
+
             {
                 string langName;
                 //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
                 //XML como su hijo y con la etiqueta langName correspondiente
                 if(i < languagesOrder.Count)
-                    langName = transLang[langId];
+                    langName = languagesOrder[(int)langId];
                 else
                     langName = "langNotDefined_" + i;
                 
@@ -117,7 +117,7 @@ public class FileClass
 
                 //Si el idoma no existe en la configuracion lo creo en el mapa y la lista de nombres sin configuracion (default)
                 if (!ret.ContainsKey(transLang[lang.Name]))
-                {                    
+                {
                     throw new ArgumentException("Inavlid Language.");
                 }
                     

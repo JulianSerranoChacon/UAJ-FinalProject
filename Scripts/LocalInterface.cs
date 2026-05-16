@@ -29,7 +29,7 @@ public class LocalInterface
     //private loqueseaClass _loquesea
 #endregion
 
-    public void Initiate(int lang, bool scan, string path)
+    public void Initiate(uint lang, bool scan, string path)
     {
         _core = LocalCore.Instance();
         _core.Initiate(lang);
@@ -50,7 +50,7 @@ public class LocalInterface
     
     public void WriteToXML(string path) 
     {
-        _files.WriteXML(path);
+        _files.WriteXML(path,LocalCore.Instance().GetNumLangs());
     }
 
     public void ReadFromXML(string path, Dictionary<uint, Dictionary<uint, string>> ret,List<string> langNames)
@@ -72,7 +72,7 @@ public class LocalInterface
     public void FullExtract(string path)
     {
         _extract.ExtractStrings();
-        _files.WriteXML(path);
+        _files.WriteXML(path,_core.GetNumLangs());
         _extract.ReplaceStrings();  
     }
 
