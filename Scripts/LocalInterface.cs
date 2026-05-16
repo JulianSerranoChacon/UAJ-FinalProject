@@ -38,7 +38,7 @@ public class LocalInterface
         //_loquesea = new loqueseaClass()
     }
 
-    public void ChangeLang(int newLang)
+    public void ChangeLang(uint newLang)
     {
         _core.ChangeLang(newLang);
         _core.SetScriptableStrings();
@@ -77,7 +77,7 @@ public class LocalInterface
         _extract.ReplaceStrings();  
     }
 
-    public void StartInExecution(string path, int lang)
+    public void StartInExecution(string path, uint lang)
     {
         List<string> langNames = new List<string>();
         _files.ReadXML(path, langNames);  
