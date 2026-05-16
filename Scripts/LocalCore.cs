@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -16,6 +17,7 @@ public class LocalCore
     private int languages;
     //private Dictionary<uint, string[]> stringTable;
 
+    private Dictionary<uint, Dictionary<uint, string>> languageMap;
     private Dictionary<uint, Dictionary<uint, string>> stringMap;
     private Dictionary<uint, Pair<ScriptableObject, FieldInfo>> refScriptObj;
 
@@ -56,11 +58,14 @@ public class LocalCore
 
         //stringTable = new Dictionary<uint, string[]>();
         stringMap = new Dictionary<uint, Dictionary<uint, string>>();
+        languageMap= new Dictionary<uint, Dictionary<uint, string>>();
         stringMap.Add(0,new Dictionary<uint, string>());
         refScriptObj = new Dictionary<uint, Pair<ScriptableObject, FieldInfo>>();  
 
         currentLang = 0;
     }
+    public Dictionary<uint, Dictionary<uint, string>> GetLanguageMap()
+        { return languageMap; }
 
     //Devuelve el string de la ID correspondiente del idioma que esta activo.
     public string GetLine(uint ID)
