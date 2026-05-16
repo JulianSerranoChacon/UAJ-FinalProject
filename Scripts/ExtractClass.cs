@@ -110,6 +110,44 @@ public class ExtractClass
             ScanScriptables();
         }
     }
+    public void UISetup()
+    {
+        List<TMP_Text> tmp = new List<TMP_Text>();
+
+        //Se crea una nueva lista al principio para evitar que se llene con infomacion repetida
+
+        //cogemos primero la direccion de las escena en la que estamos
+        string activeScenePath = SceneManager.GetActiveScene().path;
+
+        for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+        {
+
+            string scenePath = EditorBuildSettings.scenes[i].path;
+            //En caso de que ya estemos en la escena, no la cargamos
+            if (scenePath != activeScenePath)
+            {
+                EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+            }
+            Scene currentScene = SceneManager.GetSceneByBuildIndex(i);
+            foreach (var root in currentScene.GetRootGameObjects())
+            {
+                tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
+                foreach (TMP_Text text in tmp)
+                {
+
+                }
+                tmp.Clear();
+            }
+            EditorSceneManager.MarkSceneDirty(currentScene);
+            EditorSceneManager.SaveScene(currentScene);
+            //cerramos la escena antes de irnos a la siguiente escena
+            if (scenePath != activeScenePath)
+            {
+                EditorSceneManager.CloseScene(currentScene, true);
+
+            }
+        }
+    }
 
     public void ReplaceStrings()
     {
