@@ -12,6 +12,7 @@ public class FileClass
 
     //Lista de los idiomas ordenados al leer el XML de lenguajes
     private List<string> languagesOrder = new List<string>();
+    private Dictionary<string, uint> reverLanguagesOrder = new Dictionary<string, uint>(); 
 
     public void WriteXML(string path)
     {
@@ -46,7 +47,7 @@ public class FileClass
                 //Si el indice del text[i] pertence al rango de idiomas disponibles lo ponemos dentro del
                 //XML como su hijo y con la etiqueta langName correspondiente
                 if(i < languagesOrder.Count)
-                    langName = texts[i];
+                    langName = languageOrder[i];
                 else
                     langName = "langNotDefined_" + i;
                 
@@ -64,10 +65,20 @@ public class FileClass
     public Dictionary<string, Dictionary<uint, string>> ReadXML(string filename, List<string> langNames) 
     {
         // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
-        Dictionary<string, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
+        //Dictionary<string, Dictionary<uint, string>> ret = new Dictionary<string, Dictionary<uint, string>>();
 
-        if(langNames == null)
-            langNames = new List<string>();
+        /*if(langNames == null)
+            langNames = new List<string>();*/
+
+        //Rellena languageOrder y reverseLaanguageOrder con la informacion dada
+        else (langNames != null)
+        {
+            languagesOrder = langNames;
+            for(int i = 0; i < languagesOrder.Count; i++)
+            {
+                reverLanguagesOrder[langNames[i]] = i;
+            }
+        }
 
         //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
@@ -80,7 +91,7 @@ public class FileClass
         //for(int i = 0; i < langNames.Count ; i++)
         //    ret.Add(langNames[i],new Dictionary<uint, string>());
 
-        int nLg = texts[0].ChildNodes.Count;
+        /*int nLg = texts[0].ChildNodes.Count;
 
         for (int j = 0; j < numLang; j++)
         {
@@ -88,7 +99,7 @@ public class FileClass
 
             if(!langNames.Contains(lang.Name))
                 langNames.Add(lang.Name);
-        }
+        }*/
 
         //Recorremos la lista de textos del XML
 
@@ -114,10 +125,15 @@ public class FileClass
                     langNames.Add(lang.Name);
                     ret.Add(lang.Name,new Dictionary<uint, string>());
                 }*/
+                if(!reverLanguagesOrder.ContainsKey(lang.Name))
+                {
+                    reverLanguagesOrder[lang.Name] = languageOrder.Count;
+                    languageOrder.Add(lang.Name);
+                }
                     
                 //introduzco el texto en el idioma correspondiente con su id
                 //ret[lang.Name].Add(id,lang.InnerText);
-                LocalCore.Instance().SetLine(id, j, lang.InnerText)
+                LocalCore.Instance().SetLine(id, reverLanguagesOrder[lang.Name], lang.InnerText);
             }
         }
 
