@@ -146,6 +146,15 @@ public class LocalCore
         //Debug.Log(currentLang);
     }
 
+    public void AddRemainingLanguages()
+    {
+        for(int i = 0; i < languages; i++)
+        {
+            if (!stringMap.ContainsKey(i))
+                stringMap.Add(i, new Dictionary<uint, string>());
+        }
+    }
+
     //Cambia el idioma que esta usando la clase
     //Falla si es un idioma fuera del alcance especificado.
     public void ChangeLang(uint newLang)
