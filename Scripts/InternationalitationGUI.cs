@@ -15,6 +15,7 @@ public class InternationalitationGUI : EditorWindow
     private bool setup = false;
     private bool scanScriptables = false;
     private string scriptablePath = "Assets";
+    private bool readLangNames = false;
 
     // Incluye una entrada en el menu superior de Unity
     [MenuItem("Custom Plugins/Internationalitaion Plugin")]
@@ -42,6 +43,13 @@ public class InternationalitationGUI : EditorWindow
             EditorGUILayout.Space();
             GUILayout.Label("Amount of languages:");
             langNum = GUILayout.TextField(langNum, 25);
+
+            EditorGUILayout.Space();
+
+            readLangNames = GUILayout.Toggle(scanScriptables, "Read Language settings from XML file?");
+            if (readLangNames)
+                GUILayout.Label("After selecting path in which to save the extracted strings," + 
+                "a second window will pop up to select the language settings file.")
             
             if (GUILayout.Button("Setup"))
             {
@@ -157,7 +165,8 @@ public class InternationalitationGUI : EditorWindow
             inter.Initiate(langinit, scan, scrpath);
 
             //Leemos primero el XML de los idiomas, antes de la extraccion
-            readListLanguage();
+            if(readLangNames)
+                readListLanguage();
             //Ahora si que hacenis la extracción
             inter.FullExtract(selectedPath);
         }
