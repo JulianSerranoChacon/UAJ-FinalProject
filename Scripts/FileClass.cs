@@ -80,28 +80,12 @@ public class FileClass
 
     public void ReadXML(string filename) 
     {
-        // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
-        //Dictionary<uint, Dictionary<uint, string>> ret = new Dictionary<uint, Dictionary<uint, string>>();
-        //(Dictionary<uint, Dictionary<uint, string>> ret = _core.GetStringMap();
-
-        //if(langNames == null)
-        //    langNames = new List<string>();
-
         //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.Load(filename);
 
         //Cogemos todos los textos etiquetados con text  
         XmlNodeList texts = xmlDoc.GetElementsByTagName("text");
-
-        //creo los idiomas con sus tablas dentro del diccionario
-        /*for(int i = 0; i < langNames.Count ; i++)
-        {
-            if(!transLang.ContainsKey(langNames[i]))
-                throw new ArgumentException("Inavlid Language.");
-
-            ret.Add(transLang[langNames[i]],new Dictionary<uint, string>());
-        }*/
 
         //Recorremos la lista de textos del XML
 
@@ -112,41 +96,17 @@ public class FileClass
             //Numero de lenguajes que tiene el texto
             int numLang = texts[i].ChildNodes.Count;
 
-            //Debug.Log(numLang);
-
             //Recorremos los hijos
             for (int j = 0; j < numLang; j++)
             {
                 //Nodo hijo
                 XmlNode lang = texts[i].ChildNodes[j];
-                //Cambiamos el idioma del localCore y anadimos traduccion al Diccionario
-
-                //Si el idoma no existe en la configuracion lo creo en el mapa y la lista de nombres sin configuracion (default)
-                /*if (!ret.ContainsKey(transLang[lang.Name]))
-                {
-                    throw new ArgumentException("Inavlid Language.");
-                }*/
-
-                //introduzco el texto en el idioma correspondiente con su id
-                //ret[transLang[lang.Name]].Add(id,lang.InnerText);
 
                 //Compound text es el texto con las variables sustituidas
                 string res = CompoundText(lang.InnerText);
                 _core.SetLine(id, transLang[lang.Name], res);
             }
         }
-
-        //foreach (var item in ret)
-        //{
-        //    UnityEngine.Debug.Log("Idioma: " + item.Key);
-
-        //    foreach (var values in item.Value)
-        //    {
-        //        UnityEngine.Debug.Log(
-        //            "ID: " + values.Key +
-        //            " -> " + values.Value);
-        //    }
-        //}
     }
 
 
@@ -193,7 +153,6 @@ public class FileClass
 
             //Metemos el lenguaje devuelto con los idiomas y sus parametros
             ret[id] = node;
-            //Debug.Log(langName);
         }
         //devolvemos un mapa con los idiomas y sus parametros
 
