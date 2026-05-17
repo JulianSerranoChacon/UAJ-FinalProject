@@ -28,9 +28,10 @@ public class LocalCore
 
     //public IReadOnlyDictionary<uint, string[]> GetLines => stringTable;
     public IReadOnlyDictionary<uint, Dictionary<uint, string>> GetLines => stringMap;
-#endregion
+    public IReadOnlyDictionary<uint, XmlNode> GetLanguageMap => languageMap;
+    #endregion
 
-#region Singleton
+    #region Singleton
     //La clase necesitara ser un singleton ya que solo queremos que exista una
     public LocalCore() {}
 
@@ -57,24 +58,13 @@ public class LocalCore
 
         languages = langAm;
 
-        //stringTable = new Dictionary<uint, string[]>();
         stringMap = new Dictionary<uint, Dictionary<uint, string>>();
         languageMap = new Dictionary<uint, XmlNode>();
-
-        //stringMap.Add(0, new Dictionary<uint, string>());
-        //stringMap.Add(1, new Dictionary<uint, string>());
-        //stringMap[1].Add(0, "YotokoTuano");
-
 
         refScriptObj = new Dictionary<uint, Pair<ScriptableObject, FieldInfo>>();
 
         currentLang = 0;
     }
-    /*public Dictionary<uint, XmlNode> GetLanguageMap()
-        { return languageMap; }
-    public Dictionary<uint, Dictionary<uint, string>> GetStringMap()
-        { return stringMap; }*/
-
     public void  SetLanguageConfig(Dictionary<uint, XmlNode> conf)
     {
         languageMap = conf;
@@ -84,13 +74,6 @@ public class LocalCore
     //Devuelve el string de la ID correspondiente del idioma que esta activo.
     public string GetLine(uint ID)
     {
-        //string[] box;
-
-        /*if(stringTable.TryGetValue(ID, out box))
-            return box[currentLang];
-        else
-            throw new ArgumentException("No value assigned to corresponding key.");*/
-
         if(!stringMap.ContainsKey(currentLang) || !stringMap[currentLang].ContainsKey(ID))
             throw new ArgumentException("No value assigned to corresponding key.");
 
@@ -109,7 +92,6 @@ public class LocalCore
         {
             stringMap[currentLang].Add(ID, value);
         }
-        //Debug.Log(currentLang);
     }
     public void SetLineLangs(uint ID,string value)
     {
@@ -132,21 +114,6 @@ public class LocalCore
         else {
             stringMap[lang].Add(ID, value);
         }
-
-
-        //string[] box;
-        //Debug.Log(languages);
-        //Debug.Log(lang);
-        //if (stringTable.TryGetValue(ID, out box))
-        //    box[lang] = value;
-        //else
-        //{
-        //    box = new string[languages];
-        //    box[lang] = value;
-        //    stringTable[ID] = box;
-        //}
-
-        //Debug.Log(currentLang);
     }
 
     public void AddNewLanguage(uint id)
@@ -172,11 +139,6 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
-    }
-
-    public void SceneLoaded()
-    {
-        //SetTMPStrings();
     }
 
     #region Reference gaming
