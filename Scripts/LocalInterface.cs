@@ -30,7 +30,6 @@ public class LocalInterface
     #endregion
 
 
-
     public void Initiate(uint lang, bool scan, string path)
     {
         _core = LocalCore.Instance();
@@ -39,6 +38,14 @@ public class LocalInterface
         _files = new FileClass();
     }
 
+    public void RegisterTextUpdate(TextUpdate textUp)
+    {
+        _core.RegisterTextUpdate(textUp);   
+    }
+    public void DeregisterTextUpdate(TextUpdate textUp)
+    {
+        _core.DeregisterTextUpdate(textUp);
+    }
     public bool IsRightToLeft()
     {
         return _core.IsRightToLeft(); 

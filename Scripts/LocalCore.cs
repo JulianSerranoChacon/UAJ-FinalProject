@@ -24,6 +24,8 @@ public class LocalCore
     private Dictionary<uint, Dictionary<uint, string>> stringMap;
     private Dictionary<uint, Pair<ScriptableObject, FieldInfo>> refScriptObj;
 
+    private List<TextUpdate> textUpdateRefs;
+
     //Marcador que lleva la cuenta del lenguaje actual
     //Funciona para lectura/escritura y ejecucion
     private uint currentLang;
@@ -72,6 +74,7 @@ public class LocalCore
         languageMap = new Dictionary<uint, XmlNode>();
 
         refScriptObj = new Dictionary<uint, Pair<ScriptableObject, FieldInfo>>();
+        textUpdateRefs = new List<TextUpdate>();    
 
         currentLang = 0;
     }
@@ -80,7 +83,18 @@ public class LocalCore
         languageMap = conf;
     }
 
-
+    public void RegisterTextUpdate(TextUpdate textUp)
+    {
+        textUpdateRefs.Add(textUp);
+    }
+    public void DeregisterTextUpdate(TextUpdate textUp)
+    {
+        textUpdateRefs.Remove(textUp);
+    }
+    public void ClearTextUpdate()
+    { 
+        textUpdateRefs.Clear(); 
+    }
     //Devuelve el string de la ID correspondiente del idioma que esta activo.
     public string GetLine(uint ID)
     {
@@ -156,6 +170,10 @@ public class LocalCore
             throw new ArgumentException("New language value exceeding range of languages.");
 
         currentLang = newLang; 
+        foreach(TextUpdate refs in textUpdateRefs)
+        {
+            refs.SetText();
+        }
     }
 
     #region Reference gaming
