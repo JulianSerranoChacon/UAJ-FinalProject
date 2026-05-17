@@ -44,14 +44,4 @@ public class paco : MonoBehaviour
     {
       LocalInterface.Instance().OnQuit();    
     }
-    void Start()
-    {
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-
 }

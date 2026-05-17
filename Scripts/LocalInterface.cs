@@ -81,6 +81,11 @@ public class LocalInterface
         _files.ReadVariablesToXML(path);
     }
 
+    public void writeVariableIntoaXML(string path, string key, string value)
+    {
+        _files.writeVariableIntoaXML(path,key,value);
+    }
+
 
 
     public string GetLine(uint ID)
