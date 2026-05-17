@@ -201,51 +201,62 @@ public class FileClass
         //return ret;
     }
 
-public void WriteVariablesToXML(string path, string key, string value)
-{
-    XmlDocument xmlDoc = new XmlDocument();
-
-    // Cargar o crear XML
-    if (File.Exists(path))
+    public void WriteVariablesToXML(string path, string key, string value)
     {
-        xmlDoc.Load(path);
+        XmlDocument xmlDoc = new XmlDocument();
+
+        // Si existe, cargar
+        if (File.Exists(path))
+        {
+
+            xmlDoc.Load(path);
+
+        }
+        else
+        {
+            // Crear documento nuevo
+            XmlDeclaration declaration =
+                xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+            XmlElement root = xmlDoc.CreateElement("Variables");
+
+            xmlDoc.AppendChild(declaration);
+            xmlDoc.AppendChild(root);
+        }
+        
+        if(variables.ContainsKey(key))
+            variables[key] = value;
+        else
+            variables.Add(key,value);
+
+        // Obtener el nodo raíz
+        XmlNode rootNode = xmlDoc.SelectSingleNode("Variables");
+
+        // Crear nuevo elemento
+        XmlElement textElement = rootNode.SelectSingleNode(key);
+
+        if(textElement == null)
+            textElement = xmlDoc.CreateElement(key);
+        
+        textElement.InnerText = value;
+
+        // Añadir al root
+        if(textElement == null)
+            rootNode.AppendChild(textElement);
+
+         // Guardado inmediato al disco
+        using (FileStream fs = new FileStream(
+            path,
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None))
+        {
+            xmlDoc.Save(fs);
+
+            // Fuerza escritura física inmediata
+            fs.Flush(true);
+        }
     }
-    else
-    {
-        XmlDeclaration declaration =
-            xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
-
-        XmlElement root = xmlDoc.CreateElement("Variables");
-
-        xmlDoc.AppendChild(declaration);
-        xmlDoc.AppendChild(root);
-    }
-
-    // Actualizar diccionario
-    if (variables.ContainsKey(key))
-        variables[key] = value;
-    else
-        variables.Add(key, value);
-
-    // Obtener nodo raíz
-    XmlNode rootNode = xmlDoc.SelectSingleNode("/Variables");
-
-    // Buscar elemento existente
-    XmlElement textElement = rootNode.SelectSingleNode(key) as XmlElement;
-
-    // Si no existe, crearlo y añadirlo
-    if (textElement == null)
-    {
-        textElement = xmlDoc.CreateElement(key);
-        rootNode.AppendChild(textElement);
-    }
-
-    // Asignar valor
-    textElement.InnerText = value;
-
-    // Guardar archivo
-    xmlDoc.Save(path);
-}
 
     public void ReadVariablesToXML(string path)
     {
