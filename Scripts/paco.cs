@@ -32,7 +32,7 @@ public class paco : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this);
             LocalInterface.Instance().Initiate(langs, scanScriptables, scriptablePath);
-            LocalInterface.Instance().StartInExecution(filePath, 0, confPath);
+            LocalInterface.Instance().StartInExecution(filePath, 0, confPath, variablePath);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else

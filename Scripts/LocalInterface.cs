@@ -97,9 +97,10 @@ public class LocalInterface
         _extract.ReplaceStrings();  
     }
 
-    public void StartInExecution(string path, uint lang, string confpath)
+    public void StartInExecution(string path, uint lang, string confpath, string varPath)
     { 
         _files.ReadXMLLanguage(confpath);
+        _files.ReadVariablesToXML(varPath);
         _files.ReadXML(path);  
         _extract.setScriptableRefereces();
         ChangeLang(lang);
