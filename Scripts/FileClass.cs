@@ -208,12 +208,6 @@ public class FileClass
         // Si existe, cargar
         if (File.Exists(path))
         {
-            ReadVariablesToXML(path);
-            
-            if(variables.ContainsKey(key))
-                variables[key] = value;
-            else
-                variables.Add(key,value);
 
             xmlDoc.Load(path);
 
@@ -229,16 +223,26 @@ public class FileClass
             xmlDoc.AppendChild(declaration);
             xmlDoc.AppendChild(root);
         }
+        
+        if(variables.ContainsKey(key))
+            variables[key] = value;
+        else
+            variables.Add(key,value);
 
         // Obtener el nodo raíz
         XmlNode rootNode = xmlDoc.SelectSingleNode("Variables");
 
         // Crear nuevo elemento
-        XmlElement textElement = xmlDoc.CreateElement(key);
+        XmlElement textElement = xmlDoc.SelectSingleNode(key);
+
+        if(textElement == null)
+            XmlElement textElement = xmlDoc.CreateElement(key);
+        
         textElement.InnerText = value;
 
         // Añadir al root
-        rootNode.AppendChild(textElement);
+        if(textElement == null)
+            rootNode.AppendChild(textElement);
 
         // Guardar
         xmlDoc.Save(path);
