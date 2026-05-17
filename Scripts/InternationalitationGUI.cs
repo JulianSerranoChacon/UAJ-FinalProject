@@ -6,6 +6,22 @@ using System.Xml;
 using UnityEditor;
 using UnityEngine;
 
+public enum CharacterFlow
+{
+    LeftToRight,   // Lectura occidental (A -> ... -> B)
+    RightToLeft,   // Lectura semitica/arabe (B <- ... <- A)
+    TopToBottom,   // Lectura aiatica vertical tradicional
+    BottomToTop    // Lectura de escrituras antiguas
+}
+
+public enum LineProgression
+{
+    TopToBottom,   // Progresion estandar (linea 1 arriba, linea 2 abajo)
+    BottomToTop,   // Progresion invertida (linea 1 abajo, linea 2 arriba)
+    RightToLeft,   // Progresion asiatica tradicional (parrafo 1 a la derecha, parrafo 2 a la izquierda)
+    LeftToRight    // Progresion del mongol tradicional (parrafo 1 a la izquierda, parrafo 2 a la derecha)
+}
+
 public class InternationalitationGUI : EditorWindow
 {
 
@@ -17,6 +33,9 @@ public class InternationalitationGUI : EditorWindow
     private string scriptablePath = "Assets";
     private bool readLangNames = false;
     private bool clampUI = false;
+
+    private CharacterFlow selectedCharFlow = CharacterFlow.LeftToRight;
+    private LineProgression selectedLineProg = LineProgression.TopToBottom;
 
     // Incluye una entrada en el menu superior de Unity
     [MenuItem("Custom Plugins/Internationalitaion Plugin")]
@@ -57,7 +76,7 @@ public class InternationalitationGUI : EditorWindow
             clampUI = GUILayout.Toggle(clampUI, "Auto setup all UI Clampers?");
 
             EditorGUILayout.Space();
-            
+
             if (GUILayout.Button("Setup"))
             {
                 if (langNum == null)
@@ -100,10 +119,22 @@ public class InternationalitationGUI : EditorWindow
                 ReadFromXML();
             }*/
 
-            /*if (GUILayout.Button("Auto Setup All UI Clampers"))
+            if (GUILayout.Button("Auto Setup All UI Clampers"))
             {
                 inter.SetupUIClampers();
-            }*/
+            }
+            EditorGUILayout.Space();
+
+            GUILayout.Label("Global Text Orientation Settings", EditorStyles.boldLabel);
+            selectedCharFlow = (CharacterFlow)EditorGUILayout.EnumPopup("Character Flow (Letras):", selectedCharFlow);
+            selectedLineProg = (LineProgression)EditorGUILayout.EnumPopup("Line Progression (Líneas):", selectedLineProg);
+
+            EditorGUILayout.Space();
+
+            if (GUILayout.Button("Auto Apply Text Orientation Settings"))
+            {
+                inter.SetupTextOrientation(selectedCharFlow, selectedLineProg);
+            }
 
         }
     }
