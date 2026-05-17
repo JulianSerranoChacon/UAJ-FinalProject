@@ -122,10 +122,10 @@ public class InternationalitationGUI : EditorWindow
                 WriteToXML();
             }*/
             //Boton que ejecuta la lectura de las cadenas de strings de un XML concreto
-            if (GUILayout.Button("Read from XML"))
+            /*if (GUILayout.Button("Read from XML"))
             {
                 ReadFromXML();
-            }
+            }*/
 
             if (GUILayout.Button("Auto Setup All UI Clampers"))
             {

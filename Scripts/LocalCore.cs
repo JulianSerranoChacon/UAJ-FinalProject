@@ -90,7 +90,7 @@ public class LocalCore
         }
         else
         {
-            if(!stringMap[currentLang].Contains(id))
+            if(!stringMap[currentLang].ContainsKey(ID))
                 stringMap[currentLang].Add(ID, value);
             else
                 stringMap[currentLang][ID] = value;
@@ -110,16 +110,16 @@ public class LocalCore
 
     public void SetLine(uint ID, uint lang, string value)
     {
-         if (!stringMap.ContainsKey(currentLang))
+         if (!stringMap.ContainsKey(lang))
         {
             throw new ArgumentException("No value assigned to corresponding Lang.");
         }
         else
         {
-            if(!stringMap[currentLang].Contains(id))
-                stringMap[currentLang].Add(ID, value);
+            if(!stringMap[lang].ContainsKey(ID))
+                stringMap[lang].Add(ID, value);
             else
-                stringMap[currentLang][ID] = value;
+                stringMap[lang][ID] = value;
         }
     }
 
