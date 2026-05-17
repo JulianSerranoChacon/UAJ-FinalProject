@@ -110,12 +110,16 @@ public class LocalCore
 
     public void SetLine(uint ID, uint lang, string value)
     {
-        if (!stringMap.ContainsKey(lang))
+         if (!stringMap.ContainsKey(currentLang))
         {
             throw new ArgumentException("No value assigned to corresponding Lang.");
         }
-        else {
-            stringMap[lang].Add(ID, value);
+        else
+        {
+            if(!stringMap[currentLang].Contains(id))
+                stringMap[currentLang].Add(ID, value);
+            else
+                stringMap[currentLang][ID] = value;
         }
     }
 
