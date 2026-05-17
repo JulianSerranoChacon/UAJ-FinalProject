@@ -1,6 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Variables>
-    <Nombre>Paco</Nombre>
-    <Apellido>Jones</Apellido>
-    <Sexo>Mujer</Sexo>
+  <Nombre>Paco</Nombre>
+  <Apellido>Jones</Apellido>
+  <Sexo>Mujer</Sexo>
+  <Cojon>Derecho</Cojon>
+  <Cojon>Derecho</Cojon>
+  <Cojon>Derecho</Cojon>
+  <Cojon>Derecho</Cojon>
+  <Cojon>Derecho</Cojon>
 </Variables>

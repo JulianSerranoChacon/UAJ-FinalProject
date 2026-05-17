@@ -25,15 +25,12 @@ public class paco : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        Debug.Log("Madre");
         if (_instance == null)
         {
-            Debug.Log("De Jose");
             _instance = this;
             DontDestroyOnLoad(this);
             LocalInterface.Instance().Initiate(langs, scanScriptables, scriptablePath);
             LocalInterface.Instance().StartInExecution(filePath, 0, confPath, variablePath);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else
         {
