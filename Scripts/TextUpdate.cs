@@ -16,9 +16,14 @@ public class TextUpdate : MonoBehaviour
     {
         tmpText = GetComponent<TMP_Text>();
         localInterface = LocalInterface.Instance();
-        setText();
+        localInterface.RegisterTextUpdate(this);
+        SetText();
     }
-    void setText()
+    private void OnDestroy()
+    {
+        localInterface.DeregisterTextUpdate(this);
+    }
+    public void SetText()
     {
         tmpText.text = localInterface.GetLine(ID);
         tmpText.isRightToLeftText = localInterface.IsRightToLeft();
