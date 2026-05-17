@@ -75,6 +75,10 @@ public class LocalCore
     public Dictionary<uint, Dictionary<uint, string>> GetStringMap()
         { return stringMap; }
 
+    public SetLanguageConfig(Dictionary<uint, XmlNode> conf)
+    {
+        languageMap = conf;
+    }
 
 
     //Devuelve el string de la ID correspondiente del idioma que esta activo.

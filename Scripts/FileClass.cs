@@ -139,7 +139,8 @@ public class FileClass
     }
 
 
-    public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames)
+    //public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames)
+    public void ReadXMLLanguage(string filename, List<string> langNames)
     {
         Dictionary<uint, XmlNode> ret = new Dictionary<uint, XmlNode>();
 
@@ -183,6 +184,8 @@ public class FileClass
             //Debug.Log(langName);
         }
         //devolvemos un mapa con los idiomas y sus parametros
-        return ret;
+
+        LocalCore.Instance().SetLanguageConfig(ret);
+        //return ret;
     }
 }
