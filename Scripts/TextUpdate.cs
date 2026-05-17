@@ -21,7 +21,8 @@ public class TextUpdate : MonoBehaviour
     }
     private void OnDestroy()
     {
-        localInterface.DeregisterTextUpdate(this);
+        if(this!=null)
+            localInterface.DeregisterTextUpdate(this);
     }
     public void SetText()
     {

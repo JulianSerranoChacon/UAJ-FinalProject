@@ -26,6 +26,8 @@ public class LocalInterface
     private LocalCore _core;
     private ExtractClass _extract;
     private FileClass _files;
+    private string varPath;
+
     //private loqueseaClass _loquesea
     #endregion
 
@@ -43,8 +45,8 @@ public class LocalInterface
         _core.RegisterTextUpdate(textUp);   
     }
     public void DeregisterTextUpdate(TextUpdate textUp)
-    {
-        _core.DeregisterTextUpdate(textUp);
+    {   if(textUp != null)
+            _core.DeregisterTextUpdate(textUp);
     }
     public bool IsRightToLeft()
     {
@@ -81,9 +83,10 @@ public class LocalInterface
         _files.ReadVariablesToXML(path);
     }
 
-    public void writeVariableIntoaXML(string path, string key, string value)
+    public void WriteVariableToXML(string key, string value)
     {
-        _files.writeVariableIntoaXML(path,key,value);
+            UnityEngine.Debug.Log("A");
+        _files.WriteVariablesToXML(varPath,key,value);
     }
 
 
@@ -102,11 +105,12 @@ public class LocalInterface
         _extract.ReplaceStrings();  
     }
 
-    public void StartInExecution(string path, uint lang, string confpath, string varPath)
-    { 
+    public void StartInExecution(string path, uint lang, string confpath, string vP)
+    {
+        varPath = vP;
         _files.ReadXMLLanguage(confpath);
         _files.ReadVariablesToXML(varPath);
-        _files.ReadXML(path);  
+        _files.ReadXML(path);
         _extract.setScriptableRefereces();
         ChangeLang(lang);
     }
