@@ -110,10 +110,14 @@ public class LocalCore
             stringMap[currentLang].Add(ID, value);
         }
         //Debug.Log(currentLang);
-
-        
     }
-
+    public void SetLineLangs(uint ID,string value)
+    {
+        for(uint i=0; i<languages; i++)
+        {
+            stringMap[i].Add(ID, value);
+        }
+    }
     public uint GetNumLangs()
     {
         return languages;

@@ -57,7 +57,7 @@ public class ExtractClass
                 if (val is string)
                 {
                     scriptObjRef[ID] = new Pair<ScriptableObject, FieldInfo>(obj, m);
-                    LocalCore.Instance().SetLine(ID, (string)val);
+                    LocalCore.Instance().SetLineLangs(ID, (string)val);
                     LocalCore.Instance().SetScriptableObjectReference(ID, obj, m);
 
                     ID++;
@@ -89,7 +89,7 @@ public class ExtractClass
                 tmp.AddRange(root.GetComponentsInChildren<TMP_Text>(true));
                 foreach (TMP_Text text in tmp)
                 {
-                    LocalCore.Instance().SetLine(ID, text.text);
+                    LocalCore.Instance().SetLineLangs(ID, text.text);
                     TextUpdate temp= text.GetComponent<TextUpdate>();
                     if (temp==null)
                     {
