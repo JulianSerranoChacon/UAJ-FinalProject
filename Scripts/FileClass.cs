@@ -198,45 +198,38 @@ public class FileClass
         //return ret;
     }
 
-
-
-
-    
     public void WriteVariablesToXML(string path, string key, string value)
     {
-        //Leemos el documento de la ruta correspondiente
         XmlDocument xmlDoc = new XmlDocument();
 
+        // Si existe, cargar
         if (File.Exists(path))
         {
-            // El fichero ya existe → cargarlo
             xmlDoc.Load(path);
         }
         else
         {
-            // No existe → crear estructura nueva
+            // Crear documento nuevo
             XmlDeclaration declaration =
                 xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
 
             XmlElement root = xmlDoc.CreateElement("Variables");
 
             xmlDoc.AppendChild(declaration);
-
             xmlDoc.AppendChild(root);
-
-
-
-
-
-
-
-
-
-            xmlDoc.Save(path);
         }
 
+        // Obtener el nodo raíz
+        XmlNode rootNode = xmlDoc.SelectSingleNode("Variables");
 
+        // Crear nuevo elemento
+        XmlElement textElement = xmlDoc.CreateElement(key);
+        textElement.InnerText = value;
+
+        // Añadir al root
+        rootNode.AppendChild(textElement);
+
+        // Guardar
+        xmlDoc.Save(path);
     }
-
-
 }
