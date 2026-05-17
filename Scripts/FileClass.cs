@@ -212,6 +212,8 @@ public class FileClass
             
             if(variables.ContainsKey(key))
                 variables[key] = value;
+            else
+                variables.Add(key,value);
 
             xmlDoc.Load(path);
 
