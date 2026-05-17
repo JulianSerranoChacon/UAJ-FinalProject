@@ -53,12 +53,12 @@ public class LocalInterface
         _files.WriteXML(path,LocalCore.Instance().GetNumLangs());
     }
 
-    public void ReadFromXML(string path, Dictionary<uint, Dictionary<uint, string>> ret,List<string> langNames)
+    public void ReadFromXML(string path, List<string> langNames)
     {
-        _files.ReadXML(path,ret,langNames);
+        _files.ReadXML(path, langNames);
     }
 
-    public Dictionary<uint, XmlNode> ReadListLanguage(string path, List<string> lagNames, Dictionary<uint, Dictionary<uint,string>> sM)
+    public Dictionary<uint, XmlNode> ReadListLanguage(string path, List<string> lagNames)
     {
         return _files.ReadXMLLanguage(path,lagNames,sM);
     }
@@ -79,7 +79,7 @@ public class LocalInterface
     public void StartInExecution(string path, uint lang)
     {
         List<string> langNames = new List<string>();
-        _files.ReadXML(path, _core.GetStringMap(),langNames);  
+        _files.ReadXML(path, _core.GetStringMap(), langNames);  
         _extract.setScriptableRefereces();
         ChangeLang(lang);
     }

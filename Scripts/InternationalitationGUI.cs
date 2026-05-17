@@ -144,7 +144,7 @@ public class InternationalitationGUI : EditorWindow
             List<string> langNames = new List<string>();
             langNames.Add("Español");
             langNames.Add("English");
-            inter.ReadFromXML(selectedPath,LocalCore.Instance().GetStringMap(),langNames);
+            inter.ReadFromXML(selectedPath, langNames);
             Debug.Log("File load from: " + selectedPath);
         }
     }
@@ -185,7 +185,8 @@ public class InternationalitationGUI : EditorWindow
         {
             List<string> list = new List<string>();
             //file.ReadXML(selectedPath);
-            Dictionary<uint, XmlNode> langList = inter.ReadListLanguage(selectedPath, list, LocalCore.Instance().GetStringMap());
+            //Dictionary<uint, XmlNode> langList = 
+            inter.ReadListLanguage(selectedPath, list);
         }
     }
 

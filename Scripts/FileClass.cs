@@ -71,10 +71,11 @@ public class FileClass
         xmlDoc.Save(path);
     }
 
-    public void ReadXML(string filename,Dictionary<uint, Dictionary<uint, string>> ret, List<string> langNames) 
+    public void ReadXML(string filename, List<string> langNames) 
     {
         // Mapa que contiene los mapas de los textos de cada idioma usando el propio idioma como clave
         //Dictionary<uint, Dictionary<uint, string>> ret = new Dictionary<uint, Dictionary<uint, string>>();
+        Dictionary<uint, Dictionary<uint, string>> ret = LocalCore.Instance().GetStringMap();
 
         if(langNames == null)
             langNames = new List<string>();
@@ -138,7 +139,7 @@ public class FileClass
     }
 
 
-    public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames, Dictionary<uint, Dictionary<uint, string>> sM)
+    public Dictionary<uint, XmlNode> ReadXMLLanguage(string filename, List<string> langNames)
     {
         Dictionary<uint, XmlNode> ret = new Dictionary<uint, XmlNode>();
 
@@ -156,6 +157,8 @@ public class FileClass
         //Debug.Log(texts.Count);
         //Limpiamos primero el orden de los idiomas leidos en el XML
         languagesOrder.Clear();
+
+        Dictionary<uint, Dictionary<uint, string>> sM = LocalCore.Instance().GetStringMap();
 
         foreach (XmlNode node in texts)
         {
