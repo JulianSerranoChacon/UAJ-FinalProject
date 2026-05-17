@@ -96,7 +96,6 @@ public class ExtractClass
                         UnityEngine.Object.DestroyImmediate(temp);
                     }
                     temp = text.AddComponent<TextUpdate>();
-                    Debug.Log(ID);
                     temp.ID = ID;
                     ID++;
                 }

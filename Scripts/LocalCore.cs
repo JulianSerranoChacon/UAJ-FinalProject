@@ -101,7 +101,6 @@ public class LocalCore
     //Si la ID es nueva, crea un array y lo almacena
     public void SetLine(uint ID, string value)
     {
-        Debug.Log(currentLang);
         if (!stringMap.ContainsKey(currentLang))
         {
             throw new ArgumentException("No value assigned to corresponding Lang.");
@@ -148,7 +147,7 @@ public class LocalCore
 
     public void AddRemainingLanguages()
     {
-        for(int i = 0; i < languages; i++)
+        for(uint i = 0; i < languages; i++)
         {
             if (!stringMap.ContainsKey(i))
                 stringMap.Add(i, new Dictionary<uint, string>());
